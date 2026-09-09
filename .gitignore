@@ -1,0 +1,85 @@
+# Python: caches and local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+.coverage
+htmlcov/
+*.egg-info/
+
+# MATLAB: autosave and local session state (keep .m and .mat)
+*.asv
+*.m~
+matlab_crash_dump.*
+MATLAB_crash_dump.*
+
+# LaTeX: compilation auxiliaries (keep .tex, .bib, images and PDF)
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.lot
+*.out
+*.toc
+*.synctex.gz
+*.synctex(busy)
+*.run.xml
+*.nav
+*.snm
+*.vrb
+*.xdv
+*.idx
+*.ilg
+*.ind
+*.glg
+*.glo
+*.gls
+*.acn
+*.acr
+*.alg
+*.loa
+*.lol
+06_论文/**/*.log
+_minted*/
+
+# Windows and editors
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+~$*
+*.swp
+*.swo
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# Local secrets; keep a shareable example
+.env
+.env.*
+!.env.example
+
+# Reserved temporary directories and tool caches
+# Keep shareable Codex/Mrite instructions/configuration; ignore only local runtime paths.
+tmp/
+temp/
+.cache/
+.codex/tmp/
+.codex/logs/
+.codex/sessions/
+.mrite/tmp/
+.mrite/cache/
+.mrite/logs/
+
+# Do not blanket-ignore .py, .m, .tex, .pdf, .csv, .xlsx, .mat or result folders.
+# For large files shared via cloud storage, add their specific paths after review.
