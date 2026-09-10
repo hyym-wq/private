@@ -1,0 +1,23 @@
+\begin{longtable}{P{0.28}P{0.14}P{0.14}P{0.14}P{0.14}}
+\caption{算法配置与本次运行时间}\label{tab:method}\\
+\toprule 方法 & 节点数 & 步长/s & 耗时/s & 最多迭代\\
+\midrule\endfirsthead
+\toprule 方法 & 节点数 & 步长/s & 耗时/s & 最多迭代\\
+\midrule\endhead
+\bottomrule\endfoot
+Euler对照 & 41 & 0.25 & 0.381 & 0\\
+CN同网格对照 & 41 & 0.25 & 2.039 & 3\\
+CN主结果 & 81 & 0.25 & 2.841 & 4\\
+\end{longtable}
+\begin{longtable}{P{0.42}P{0.25}P{0.25}}
+\caption{CN相邻分辨率全时空最大差异}\label{tab:convergence}\\
+\toprule 比较 & 温度差/摄氏度 & 含水率差/(kg/kg)\\
+\midrule\endfirsthead
+\toprule 比较 & 温度差/摄氏度 & 含水率差/(kg/kg)\\
+\midrule\endhead
+\bottomrule\endfoot
+时间：1与0.5秒 & 0.0000281 & 0.0000599\\
+时间：0.5与0.25秒 & 0.0000060 & 0.0000150\\
+空间：21与41节点 & 0.0014692 & 0.0467117\\
+空间：41与81节点 & 0.0003679 & 0.0243699\\
+\end{longtable}
