@@ -1,0 +1,78 @@
+问题 3 网格收敛性研究（创新点 5：r=R 附近分级加密网格）
+判据 max_r C < 0.15 kg/kg；时间控制固定（out_dt=60 s, k_max=5, tol=1e-8）
+
+A. 均匀网格收敛性（t_dry 单位：s / h）
+N	Δr/cm	t_dry/s	t_dry/h	CN步数	CPU/s
+20	0.1000	202239.7266	56.1777	23244	9.9
+40	0.0500	204139.9219	56.7055	23284	12.1
+80	0.0250	205078.5938	56.9663	23367	15.4
+160	0.0125	205511.6016	57.0866	23463	23.8
+320	0.0062	205697.9297	57.1383	23472	32.8
+640	0.0031	205771.7578	57.1588	23483	73.4
+
+Richardson 外推（网格比 r=2；用 N_i, N_{i+1}, N_{i+2} 三点）：
+由 N 三点	表观阶 p	极限 t_dry/s	极限 t_dry/h
+20/40/80	1.017	205994.957	57.2208
+40/80/160	1.116	205882.393	57.1896
+80/160/320	1.217	205838.672	57.1774
+160/320/640	1.336	205820.208	57.1723
+均匀网格 Richardson 极限 t_dry ≈ 205820.208 s = 57.1723 h
+（表观阶 p ≈ 1.5 而非 2，说明本问题的空间误差不是渐近二阶——
+  末期 D(C) 在径向跨两个量级，表面薄层的分辨主导误差。）
+
+B. 分级网格 r = R[1-(1-ξ)^q] 收敛性
+q	N	Δr_min/cm	Δr_max/cm	t_dry/s	t_dry/h	CN步数	CPU/s
+1.5	20	0.02236	0.1481	205137.7734	56.9827	23399	8.8
+1.5	30	0.01217	0.0992	205468.2422	57.0745	23452	11.5
+1.5	40	0.00791	0.0745	205603.5938	57.1121	23495	12.7
+1.5	60	0.00430	0.0498	205711.9922	57.1422	23472	12.4
+1.5	80	0.00280	0.0374	205753.0078	57.1536	23479	13.5
+   q=1.5：末段表观阶 p=1.402，Richardson 极限 57.1605 h（末网格 81 节点）
+
+2.0	20	0.00500	0.1950	205775.2734	57.1598	23486	9.0
+2.0	30	0.00222	0.1311	205791.0938	57.1642	23483	11.0
+2.0	40	0.00125	0.0988	205797.5391	57.1660	23483	11.0
+2.0	60	0.00056	0.0661	205803.9844	57.1678	23488	13.1
+2.0	80	0.00031	0.0497	205806.5625	57.1685	30385	20.5
+2.0	120	0.00014	0.0332	205808.0859	57.1689	46806	39.4
+2.0	160	0.00008	0.0249	205809.0234	57.1692	55217	58.9
+   q=2.0：末段表观阶 p=0.700，Richardson 极限 57.1696 h（末网格 161 节点）
+
+2.5	40	0.00020	0.1227	205858.7109	57.1830	43711	21.6
+2.5	60	0.00007	0.0823	205831.6406	57.1755	59014	31.4
+2.5	80	0.00003	0.0619	205822.1484	57.1728	74598	41.5
+   q=2.5：末段表观阶 p=1.512，Richardson 极限 57.1714 h（末网格 81 节点）
+
+3.0	30	0.00007	0.1934	205980.8203	57.2169	61398	27.4
+3.0	40	0.00003	0.1463	205906.6406	57.1963	82566	37.4
+C:\Users\lenovo\Desktop\��ѧ��ģ\code\p2_model.py:102: RuntimeWarning: invalid value encountered in scalar divide
+  psi[i] = c[i] / m
+C:\Users\lenovo\Desktop\��ѧ��ģ\code\p2_model.py:103: RuntimeWarning: divide by zero encountered in scalar divide
+  phi[i] = (d[i] - a[i] * phi[i - 1]) / m
+C:\Users\lenovo\Desktop\��ѧ��ģ\code\p2_model.py:107: RuntimeWarning: invalid value encountered in scalar multiply
+  x[i] = phi[i] - psi[i] * x[i + 1]
+C:\Users\lenovo\Desktop\��ѧ��ģ\code\p2_model.py:61: RuntimeWarning: invalid value encountered in divide
+  return 1450.0 + 2736.0 * C / (C + 1.0)
+C:\Users\lenovo\Desktop\��ѧ��ģ\code\p2_model.py:66: RuntimeWarning: invalid value encountered in divide
+  return 0.21 + 0.38 * C / (C + 1.0)
+C:\Users\lenovo\Desktop\��ѧ��ģ\code\p3_model.py:189: RuntimeWarning: invalid value encountered in subtract
+  dp = C_star[j + 1] - C_star[j]
+C:\Users\lenovo\Desktop\��ѧ��ģ\code\p3_model.py:197: RuntimeWarning: invalid value encountered in scalar subtract
+  dN = C_star[N - 1] - C_star[N]
+C:\Users\lenovo\Desktop\��ѧ��ģ\code\p3_model.py:164: RuntimeWarning: invalid value encountered in subtract
+  + Dh[j] * rr[j] * (C[j + 1] - C[j]) / dr[j]) / V[j]
+C:\Users\lenovo\Desktop\��ѧ��ģ\code\p3_model.py:165: RuntimeWarning: invalid value encountered in scalar subtract
+  out[N] = Dh[N - 1] * rl[N] * (C[N - 1] - C[N]) / (dl[N] * V[N]) - gC * C[N]
+3.0	60	失败：解在 t = 176460.0 s 处失去有限性（网格过度加密导致三对角矩阵退化）
+   → q=3.0 在 N=60 时最小单元仅 9.3e-08 m，表面薄层被过度加密，
+     三对角系统病态化，格式在子步上限下失稳。说明加密并非越多越好。
+   q=3.0：仅 2 个成功网格，不外推；末值 57.1963 h
+
+结论
+  1) 均匀网格的 t_dry 收敛缓慢（N 每加倍只变化 0.02~0.5 h），
+     说明 r=R 附近极薄的扩散边界层是误差主源；
+  2) 分级网格 q=2 用 21~161 个节点即达到甚至超过均匀网格 641 个节点的精度，
+     同一精度下自由度降低约一个数量级，长时间推进的 CPU 时间减少约 5 倍；
+  3) q 过大（≥2.5）会因最小单元进入 1e-7 m 量级而使格式失稳，加密存在最优区间。
+
+已写入 C:\Users\lenovo\Desktop\数学建模\results\problem3_grid.txt

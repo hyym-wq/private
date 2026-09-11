@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.8.19)  11 SEP 2026 11:29
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.8.19)  11 SEP 2026 15:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -860,7 +860,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 \Hy@SectionHShift=\skip75
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 32.
-) (./论文.aux)
+) (C:/Users/lenovo/AppData/Local/Temp/p3tex/论文.aux)
 \openout1 = `论文.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
@@ -980,7 +980,8 @@ Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
 Package hyperref Info: Link coloring ON on input line 5.
-(./论文.out) (./论文.out)
+(C:/Users/lenovo/AppData/Local/Temp/p3tex/论文.out)
+(C:/Users/lenovo/AppData/Local/Temp/p3tex/论文.out)
 \@outlinefile=\write3
 \openout3 = `论文.out'.
 
@@ -994,7 +995,8 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 8.
 
 (c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)) (./论文.toc [1
+))
+(C:/Users/lenovo/AppData/Local/Temp/p3tex/论文.toc [1
 
 ])
 \tf@toc=\write4
@@ -1030,8 +1032,9 @@ Package fontspec Info:
 (fontspec)             - 'normal' (m/n) with NFSS spec.:
 (fontspec)             <->"FangSong/OT:script=hani;language=dflt;"
 
-) (./2.总体分析.tex) (./3.模型假设.tex [3]) (./4.符号说明.tex)
-(./5.模型的建立与求解.tex [4] (./5.1.问题1的建立求解.tex (./5.1.1.分析与准备.tex [5]
+)
+(./2.总体分析.tex) (./3.模型假设.tex [3]) (./4.符号说明.tex) (./5.模型的建立与求解.tex [4]
+(./5.1.问题1的建立求解.tex (./5.1.1.分析与准备.tex [5]
 Overfull \hbox (25.17651pt too wide) in paragraph at lines 15--15
  [][] 
  []
@@ -1056,31 +1059,58 @@ File: ../../figures/fig11_收敛性.pdf Graphic file (type pdf)
  [14]
 File: ../../figures/fig10_全烘干过程剖面.pdf Graphic file (type pdf)
 <use ../../figures/fig10_全烘干过程剖面.pdf>
- [15])
-(./6.模型检验.tex [16]
+ [15]
+Overfull \hbox (1.73763pt too wide) in paragraph at lines 158--159
+[]\TU/lmr/bx/n/12 (1) \TU/SimSun(0)/b/n/12 多 时 间 尺 度 自 适 应 步 长。|  \TU/SimSun(0)
+/m/n/12 将 宏 观 步 长 取 为 输 出 节 拍 的 整 数 倍 $\OML/cmm/m/it/12 h \OT1/cmr/m/n/12 = \OM
+L/cmm/m/it/12 k \OT1/cmr/m/n/12 ^^A\OML/cmm/m/it/12 t[]$ |\TU/SimSun(0)/m/n/12 
+（$\OT1/cmr/m/n/12 ^^A\OML/cmm/m/it/12 t[] \OT1/cmr/m/n/12 =
+ []
+
+[16]
+File: ../../figures/fig12_自适应步长.pdf Graphic file (type pdf)
+<use ../../figures/fig12_自适应步长.pdf>
+ [17] [18]
+File: ../../figures/fig13_全烘干剖面.pdf Graphic file (type pdf)
+<use ../../figures/fig13_全烘干剖面.pdf>
+ [19]
+File: ../../figures/fig14_终止判定.pdf Graphic file (type pdf)
+<use ../../figures/fig14_终止判定.pdf>
+File: ../../figures/fig15_干燥前沿.pdf Graphic file (type pdf)
+<use ../../figures/fig15_干燥前沿.pdf>
+ [20]
+Overfull \hbox (27.5948pt too wide) in paragraph at lines 283--298
+ [][] 
+ []
+
+) (./6.模型检验.tex [21]
 File: ../../figures/fig8_稳定性对比.pdf Graphic file (type pdf)
 <use ../../figures/fig8_稳定性对比.pdf>
- [17]) (./7.模型评价.tex [18]) (./8.模型改进推广.tex) (./9.参考文献.tex)
-(./10.附录.tex
+ [22]
+Overfull \hbox (39.6308pt too wide) in paragraph at lines 59--67
+ [][] 
+ []
+
+[23] [24]) (./7.模型评价.tex) (./8.模型改进推广.tex [25]) (./9.参考文献.tex) (./10.附录.tex
 Overfull \hbox (1.30795pt too wide) in paragraph at lines 10--22
  [][] 
  []
 
-) [19] [20] (./论文.aux)
+) [26] [27] (C:/Users/lenovo/AppData/Local/Temp/p3tex/论文.aux)
  ***********
 LaTeX2e <2026-06-01>
 L3 programming layer <2026/08/11>
  ***********
 Package rerunfilecheck Info: File `论文.out' has not changed.
-(rerunfilecheck)             Checksum: 5F33385F885F7383A40B55464D411874;2854.
+(rerunfilecheck)             Checksum: BE0154CFF24B3F0E5F08CC8C74D34FA0;3148.
  ) 
 Here is how much of TeX's memory you used:
- 19613 strings out of 467745
- 443822 string characters out of 5419946
- 871238 words of memory out of 5000000
- 48424 multiletter control sequences out of 15000+600000
- 636921 words of font info for 115 fonts, out of 8000000 for 9000
+ 19838 strings out of 467745
+ 455315 string characters out of 5419946
+ 872002 words of memory out of 5000000
+ 48635 multiletter control sequences out of 15000+600000
+ 638031 words of font info for 127 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 107i,15n,125p,563b,539s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 107i,15n,125p,672b,539s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on 论文.pdf (20 pages).
+Output written on C:/Users/lenovo/AppData/Local/Temp/p3tex/论文.pdf (27 pages).
