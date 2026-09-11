@@ -3,9 +3,9 @@
 问题 1 配图生成：输出 PDF 到 figures/
 
 配色遵循已验证的数据可视化规范：
-  * 有序序列（时刻系列）用单一蓝色阶的 4 个步长
-        #86b6ef → #5598e7 → #2a78d6 → #184f95
-    该 4 步组合通过顺序色阶的全部校验（单色相、亮度单调、步距 >= 0.06、浅端对比 >= 2:1）
+  * 有序序列（时刻系列）用单一蓝色阶的 7 个步长（对应表 1/表 2 的 7 个输出时刻）
+        #86b6ef → #6da7ec → #5598e7 → #3987e5 → #2a78d6 → #256abf → #184f95
+    该 7 步组合为单一色相、亮度单调，浅端自 #86b6ef 起保证在浅色底上的可读性（对比 >= 2:1）
   * 分类序列（中心/中间/表面、数值/解析、T/C）用前 3 个分类槽位
         #2a78d6 (蓝) · #eb6834 (橙) · #1baf7a (青)
     通过 CVD 分离度与常视觉分离度校验
@@ -30,7 +30,8 @@ RES = os.path.join(BASE, "results")
 os.makedirs(FIG, exist_ok=True)
 
 # ---- 设计令牌 --------------------------------------------------------------
-SEQ4 = ["#86b6ef", "#5598e7", "#2a78d6", "#184f95"]      # 有序：时刻系列
+SEQ4 = ["#86b6ef", "#5598e7", "#2a78d6", "#184f95"]      # 有序蓝色阶（图 4 解析解参照线用）
+SEQ7 = ["#86b6ef", "#6da7ec", "#5598e7", "#3987e5", "#2a78d6", "#256abf", "#184f95"]  # 有序：时刻系列 7 步
 CAT = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100"]        # 分类：实体系列
 SURFACE = "#fcfcfb"
 INK = "#0b0b0b"
@@ -92,7 +93,7 @@ d = np.load(os.path.join(RES, "p1_fields.npz"))
 times, r, T, C = d["times"], d["r"], d["T"], d["C"]
 r_cm = r * 100.0
 
-T_TIMES = [100.0, 300.0, 900.0, 1800.0]
+T_TIMES = [100.0, 300.0, 600.0, 900.0, 1200.0, 1500.0, 1800.0]
 
 
 def idx(t):
@@ -109,7 +110,7 @@ def fig_profiles():
 
     for ax, (tag, ylab, field, _) in zip(axes, panels):
         for k, t in enumerate(T_TIMES):
-            ax.plot(r_cm, field[idx(t)], color=SEQ4[k], lw=2.0,
+            ax.plot(r_cm, field[idx(t)], color=SEQ7[k], lw=2.0,
                     zorder=3, solid_capstyle="round")
             ax.annotate(f"{int(t)} s", xy=(r_cm[-1], field[idx(t)][-1]),
                         xytext=(4, 0), textcoords="offset points",

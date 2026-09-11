@@ -1,0 +1,113 @@
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+ restricted \write18 enabled.
+entering extended mode
+(./问题一_论文.tex
+LaTeX2e <2026-06-01>
+L3 programming layer <2026-08-10>
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/ctex/ctexart.cls
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/ctex/config/ctexbackend.cfg)
+ (c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/l3kernel/expl3.sty
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/l3kernel/l3backend-xetex.def
+))
+Document Class: ctexart 2026/08/11 v2.6.5 Chinese adapter for class article (CT
+EX)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/ctex/ctexhook.sty)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/ctex/ctexpatch.sty)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/base/fix-cm.sty
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/base/ts1enc.def))
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/ctex/config/ctexopts.cfg)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2025/01/22 v1.4n Standard LaTeX document class
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/base/size12.clo))
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/ctex/engine/ctex-engine-xete
+x.def (c:/Users/lenovo/texlive/2026/texmf-dist/tex/xelatex/xecjk/xeCJK.sty
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/l3packages/xtemplate/xtempla
+te.sty)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/fontspec/fontspec.sty
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/fontspec/fontspec-xetex.sty
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/base/fontenc.sty)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/fontspec/fontspec.cfg)))
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/xelatex/xecjk/xeCJK.cfg)))
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/zhnumber/zhnumber.sty
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/zhnumber/zhnumber-utf8.cfg))
+
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/ctex/scheme/ctex-scheme-chin
+ese-article.def
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/ctex/config/ctex-name-utf8.c
+fg))
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/ctex/fontset/ctex-fontset-wi
+ndows.def))
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/ctex/config/ctex.cfg)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/amsmath/amstext.sty
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/amsmath/amsopn.sty))
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/amsfonts/amssymb.sty
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/geometry/geometry.sty
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/graphics/keyval.sty)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/generic/iftex/ifvtex.sty
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/generic/iftex/iftex.sty)))
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/booktabs/booktabs.sty)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/graphics/graphicx.sty
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/graphics/graphics.sty
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/graphics/trig.sty)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/graphics-cfg/graphics.cfg)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/graphics-def/xetex.def)))
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/tools/array.sty)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/caption/caption.sty
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/caption/caption3.sty))
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/float/float.sty)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/enumitem/enumitem.sty)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/hyperref/hyperref.sty
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.
+sty)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/generic/infwarerr/infwarerr.sty)))
+ (c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/hycolor/hycolor.sty)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/hyperref/nameref.sty
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/refcount/refcount.sty)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/generic/gettitlestring/gettitlestr
+ing.sty
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/kvoptions/kvoptions.sty)))
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/etoolbox/etoolbox.sty)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/generic/stringenc/stringenc.sty)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/generic/intcalc/intcalc.sty)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/hyperref/puenc.def)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/url/url.sty)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/generic/bitset/bitset.sty
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty)
+)) (c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/hyperref/hxetex.def
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/rerunfilecheck/rerunfilechec
+k.sty
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/generic/uniquecounter/uniquecounte
+r.sty)))
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/multirow/multirow.sty)
+(./问题一_论文.aux)
+*geometry* driver: auto-detecting
+*geometry* detected driver: xetex
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/graphics/color.sty
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/graphics/mathcolor.ltx))
+(./问题一_论文.out) (./问题一_论文.out)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd)
+(c:/Users/lenovo/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd)
+(./问题一_论文.toc [1]) [2] [3] [4] [5]
+Overfull \hbox (25.17651pt too wide) in paragraph at lines 126--126
+ [][] 
+
+Overfull \hbox (16.7874pt too wide) in paragraph at lines 140--149
+ [][] 
+[6] [7] [8] [9] [10] [11] [12] [13] [14] [15] [16] [17] [18]
+Overfull \hbox (1.30795pt too wide) in paragraph at lines 622--634
+ [][] 
+[19] [20] (./问题一_论文.aux) )
+(see the transcript file for additional information)
+Output written on 问题一_论文.pdf (20 pages).
+Transcript written on 问题一_论文.log.
