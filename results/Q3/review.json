@@ -1,0 +1,83 @@
+{
+  "question": "Q3",
+  "decision_id": "q3_inherit_q2",
+  "checks": {
+    "syntax": {
+      "status": "PASS",
+      "evidence": "Four grids executed successfully"
+    },
+    "input_contract": {
+      "status": "PASS",
+      "evidence": "Official attachment read-only; endpoint extension explicitly recorded; hashes in run summaries"
+    },
+    "method_alignment": {
+      "status": "PASS",
+      "evidence": "Inherited Q2 solver, all-node threshold; changes limited to spatial resolution"
+    },
+    "reproducibility": {
+      "status": "PASS",
+      "evidence": "N20 matches Q2 3h moisture table and 202240s dry-time baseline"
+    },
+    "output_contract": {
+      "status": "PASS",
+      "evidence": "PASS"
+    },
+    "threshold": {
+      "status": "PASS",
+      "evidence": [
+        0.15000004563848582,
+        0.14999975173173652
+      ]
+    }
+  },
+  "mesh_times_h": {
+    "20": 56.17777777777778,
+    "40": 56.705555555555556,
+    "80": 56.966388888888886,
+    "160": 57.086666666666666
+  },
+  "successive_mesh_time_changes_h": [
+    0.5277777777777786,
+    0.2608333333333306,
+    0.1202777777777797
+  ],
+  "last_mesh_relative_change": 0.0021069329284908274,
+  "local_iteration_probes_3_vs_10": [
+    {
+      "time_s": 60.0,
+      "max_delta_T": 1.4210854715202004e-14,
+      "max_delta_C": 8.881784197001252e-16
+    },
+    {
+      "time_s": 1800.0,
+      "max_delta_T": 2.842170943040401e-14,
+      "max_delta_C": 8.881784197001252e-16
+    },
+    {
+      "time_s": 10800.0,
+      "max_delta_T": 5.684341886080802e-14,
+      "max_delta_C": 4.440892098500626e-16
+    },
+    {
+      "time_s": 86400.0,
+      "max_delta_T": 4.263256414560601e-14,
+      "max_delta_C": 8.326672684688674e-17
+    },
+    {
+      "time_s": 172800.0,
+      "max_delta_T": 3.552713678800501e-14,
+      "max_delta_C": 8.326672684688674e-17
+    },
+    {
+      "time_s": 205512.0,
+      "max_delta_T": 3.552713678800501e-14,
+      "max_delta_C": 5.551115123125783e-17
+    }
+  ],
+  "limitations": [
+    "Grid differences do not certify four-decimal accuracy",
+    "Representative iteration checks do not certify every time step",
+    "Long-term ambient conditions are extrapolated from last attachment row"
+  ],
+  "verdict": "PASS with stated numerical and modeling limitations"
+}

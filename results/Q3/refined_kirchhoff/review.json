@@ -1,0 +1,25 @@
+{
+  "run": "E:\\2026数模\\private\\results\\Q3\\refined_kirchhoff\\kirchhoff_N640_p1.5_tol1e-10_step120.npz",
+  "event_h": 57.169394131079784,
+  "C_integral_balance": {
+    "max_instantaneous_absolute_residual": 2.5849394142282115e-26,
+    "relative_integrated_residual_trapezoid": 1.6285483760105308e-06,
+    "relative_integrated_residual_simpson": 8.722076965220913e-11,
+    "definition": "M=sum(vol*C); time integral uses boundary flux sampled at every accepted BDF step",
+    "meaning": "C-PDE integral balance, not asserted to be physical total water mass"
+  },
+  "Kprime_max_abs_error_grid": 0.0006669413057890372,
+  "Kprime_min": 0.0,
+  "Kprime_max": 0.8607079764250578,
+  "checks": {
+    "geometry_formula": "vol=.5*diff(edges**2), sum(vol)=R²/2 exactly",
+    "temperature_divergence": "conservative flux difference; Robin inward flux at boundary",
+    "mass_divergence": "Kirchhoff K(C) flux difference; Robin inward flux at boundary",
+    "event": "max(C)-0.15 terminal crossing, direction=-1",
+    "Kprime_identity": "d/dC [C exp(-a/C)+a Ei(-a/C)] = exp(-a/C)"
+  },
+  "limitations": [
+    "integrated residual includes independent boundary time-quadrature error; the instantaneous flux identity is algebraically conservative",
+    "Cs=max(C,1e-12) is used in constitutive functions; positive accepted states are numerical evidence, not a proof of positivity preservation"
+  ]
+}

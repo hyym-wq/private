@@ -1,0 +1,18 @@
+{
+  "question": "Q3",
+  "method": "inherited Q2",
+  "verdict": "CONDITIONAL",
+  "authorization": "q3_inherit_q2",
+  "evidence": {
+    "task_source": "A题.pdf page 2: all positions below 0.15; table5 each6h; result3 each60s and0.1cm",
+    "baseline": "previous Q2 execution: center first below threshold at202240s",
+    "operator_checks": "results/Q3/operator_checks.json"
+  },
+  "conditions": [
+    "Check all radial nodes rather than assume center maximum",
+    "Report N40 diagnostic vs N20 before attributing four-digit precision",
+    "Preserve ambient endpoint-extension assumption",
+    "Check threshold with full precision, not rounded Excel values"
+  ],
+  "fallback": null
+}
