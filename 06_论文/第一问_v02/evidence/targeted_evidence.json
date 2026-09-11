@@ -1,0 +1,123 @@
+{
+  "status": "complete_radial_ablations",
+  "cases": {
+    "q1_baseline_r16": {
+      "comparison": {
+        "temperature": {
+          "all_max_abs": 1.6376761315939348e-06,
+          "early_1_60s_max_abs": 5.120078299114539e-07,
+          "paper_7x5_max_abs": 1.1753371538247848e-06,
+          "maximum_time_s_radius_cm": [
+            301,
+            1.9
+          ]
+        },
+        "moisture": {
+          "all_max_abs": 8.41421598352099e-06,
+          "early_1_60s_max_abs": 7.84290360877904e-06,
+          "paper_7x5_max_abs": 6.637563720879314e-06,
+          "maximum_time_s_radius_cm": [
+            98,
+            1.9
+          ]
+        }
+      },
+      "nodes": 865,
+      "steps": 4134,
+      "max_nonlinear_residual": 1.0917312923300323e-11,
+      "min_moisture": 1.510237455468137,
+      "source_sha256": "9f78e0868fc416e233c400165817cf03da0f7f7ab205b717aa0d187f8c3c0512"
+    },
+    "q1_uniform881_graded_start": {
+      "comparison": {
+        "temperature": {
+          "all_max_abs": 9.393392303991277e-07,
+          "early_1_60s_max_abs": 4.196926504107523e-07,
+          "paper_7x5_max_abs": 7.88089362657729e-07,
+          "maximum_time_s_radius_cm": [
+            301,
+            1.9
+          ]
+        },
+        "moisture": {
+          "all_max_abs": 0.00020627184760657613,
+          "early_1_60s_max_abs": 0.00020627184760657613,
+          "paper_7x5_max_abs": 1.3971261669354362e-05,
+          "maximum_time_s_radius_cm": [
+            1,
+            2.0
+          ]
+        }
+      },
+      "nodes": 881,
+      "steps": 4134,
+      "max_nonlinear_residual": 8.162048249210702e-12,
+      "min_moisture": 1.5102352811044917,
+      "source_sha256": "1adf0227d24697e07387d9c23f8c20b9a4ac6014caf1294ad0055a39035e5276"
+    },
+    "q1_graded865_standard_start": {
+      "comparison": {
+        "temperature": {
+          "all_max_abs": 7.000969691972614e-06,
+          "early_1_60s_max_abs": 7.000969691972614e-06,
+          "paper_7x5_max_abs": 8.682411483107444e-07,
+          "maximum_time_s_radius_cm": [
+            1,
+            2.0
+          ]
+        },
+        "moisture": {
+          "all_max_abs": 0.00010201866872572296,
+          "early_1_60s_max_abs": 0.00010201866872572296,
+          "paper_7x5_max_abs": 6.7257933196174235e-06,
+          "maximum_time_s_radius_cm": [
+            1,
+            2.0
+          ]
+        }
+      },
+      "nodes": 865,
+      "steps": 3601,
+      "max_nonlinear_residual": 3.2923096080190385e-12,
+      "min_moisture": 1.5102374609245557,
+      "source_sha256": "655e9191bff68a0378e82b1ac67f50318e20d646847dbe2088578889df52576a"
+    }
+  },
+  "predeclared_plan": "q1_improvement_plan.json",
+  "comparison_is_not_analytic_error_bound": true,
+  "axial_status": "complete",
+  "axial": {
+    "midplane": {
+      "temperature": {
+        "all_max_abs": 2.6200029878964415e-07,
+        "early_1_60s_max_abs": 4.6352255367310136e-11,
+        "paper_7x5_max_abs": 2.6200029878964415e-07,
+        "maximum_time_s_radius_cm": [
+          1800,
+          0.0
+        ]
+      },
+      "moisture": {
+        "all_max_abs": 4.6422865551676296e-12,
+        "early_1_60s_max_abs": 6.901146321069973e-13,
+        "paper_7x5_max_abs": 4.525713137581988e-12,
+        "maximum_time_s_radius_cm": [
+          1719,
+          2.0
+        ]
+      }
+    },
+    "whole_snapshot_max_abs_T": 0.007599609834741727,
+    "whole_snapshot_max_abs_C": 0.012710218577395516,
+    "final_mean_finer": [
+      35.4274397451373,
+      2.2749253944822345
+    ],
+    "final_mean_finer_minus_main": [
+      -0.00041922350875722714,
+      9.72445141416145e-05
+    ],
+    "source_sha256": "4e995bd3991517ecd4060e93f82b30d1c89a2ed252cf72c8bd9b910b2b9d2ee8",
+    "limitation": "One axial refinement; supports difference assessment, not full-domain extrapolated accuracy."
+  }
+}

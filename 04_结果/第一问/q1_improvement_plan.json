@@ -1,0 +1,18 @@
+{
+  "model_change": "none",
+  "canonical_main": "q1_main_r16",
+  "predeclared_comparison_scope": "t=1..1800 s, 21 radii; additionally 1..60 s and 7x5 paper table",
+  "reference": "q1_spacecheck_r32: 1729 radial nodes, dt=.25 s, graded startup",
+  "numerical_resolution_target": {
+    "temperature_C": 5e-05,
+    "moisture_kg_kg": 5e-05,
+    "meaning": "Half of one 4-decimal display unit as a numerical difference target, not physical uncertainty or a guarantee of identical rounding."
+  },
+  "cases": [
+    "865 graded nodes + graded startup (saved baseline)",
+    "881 uniform nodes + same graded startup",
+    "865 graded nodes + two BE half steps totaling .5 s then fixed .5 s CN"
+  ],
+  "axial_check": "865 radial nodes fixed, 25 to 49 axial nodes, same .5 s and startup; separate output label",
+  "solver_sha256": "c644c95e95a2dcc4215886a843f5fa77edd918a8923aef837bb664ec979c626f"
+}

@@ -1,0 +1,58 @@
+\section{温度与水分迁移模型}
+
+\subsection{时变环境边界}
+在附件1中截取 $0$ 至 $1800\,\mathrm{s}$ 的31个采样点，不作平滑或外推。对任一环境变量 $B\in\{\Tin,C_\infty\}$，在相邻采样时刻 $t_j,t_{j+1}$ 之间取
+\begin{equation}
+ B(t)=B_j+\frac{t-t_j}{t_{j+1}-t_j}(B_{j+1}-B_j),\qquad t_j\le t\le t_{j+1}.
+ \label{eq:ambient}
+\end{equation}
+由此保留环境温湿度的实际变化，并避免预先设定恒温段。两端时刻的环境温度分别为 $28\,\celsius$ 和 $41.513\,\celsius$，环境水分数据分别为 $0.01963\,\kgkg$ 和 $0.03307\,\kgkg$。
+
+\subsection{控制方程}
+根据能量守恒与傅里叶定律，轴对称温度场满足
+\begin{equation}
+ \rho c_p\frac{\partial T}{\partial t}
+ =\frac{1}{r}\frac{\partial}{\partial r}\left(rk\frac{\partial T}{\partial r}\right)
+  +\frac{\partial}{\partial z}\left(k\frac{\partial T}{\partial z}\right).
+ \label{eq:heat}
+\end{equation}
+在固定干物质体积密度的假设下，将水分守恒式中的该密度约去，得到
+\begin{equation}
+ \frac{\partial C}{\partial t}
+ =\frac{1}{r}\frac{\partial}{\partial r}\left(rD(C)\frac{\partial C}{\partial r}\right)
+  +\frac{\partial}{\partial z}\left(D(C)\frac{\partial C}{\partial z}\right),\quad
+ D(C)=7\times10^{-9}\exp\left(-\frac{0.89}{C}\right).
+ \label{eq:moisture}
+\end{equation}
+式\eqref{eq:moisture}必须保留散度形式。由于 $D$ 随 $C$ 变化，展开后有
+\begin{equation}
+ \nabla\!\cdot[D(C)\nabla C]
+ =D(C)\Delta C+D'(C)|\nabla C|^2,\qquad
+ D'(C)=\frac{0.89}{C^2}D(C).
+ \label{eq:nonlinear}
+\end{equation}
+直接使用 $D(C)\Delta C$ 会遗漏非线性梯度项。第一问中热物性均为常数，且 $D$ 仅依赖 $C$，因此温度方程与水分方程可以分别求解。
+
+\subsection{初始条件及边界条件}
+初始状态为
+\begin{equation}
+ T(r,z,0)=T_0,\qquad C(r,z,0)=C_0.
+ \label{eq:initial}
+\end{equation}
+在中心轴和中截面分别施加对称条件
+\begin{equation}
+ \left.\frac{\partial T}{\partial r}\right|_{r=0}
+ =\left.\frac{\partial C}{\partial r}\right|_{r=0}=0,\qquad
+ \left.\frac{\partial T}{\partial z}\right|_{z=0}
+ =\left.\frac{\partial C}{\partial z}\right|_{z=0}=0.
+ \label{eq:symmetry}
+\end{equation}
+令 $\Gamma_e=\{r=R\}\cup\{z=H\}$ 为半域的暴露边界，$\bm n$ 为外法向，$T_s,C_s$ 为表面未知量，则
+\begin{equation}
+ \begin{aligned}
+ -k\nabla T\cdot\bm n&=h(T_s-\Tin),\\
+ -D(C_s)\nabla C\cdot\bm n&=k_m(C_s-\Ceq),\qquad \Ceq=C_\infty.
+ \end{aligned}
+ \label{eq:robin}
+\end{equation}
+该符号约定下，表面较环境冷时热流向内，表面含水率较高时水分向外迁移。表面状态由式\eqref{eq:robin}求解，而非直接赋成环境值。侧面与端面交界处分别计算两个方向的通量。初始均匀含水率与瞬时失水边界在 $t=0$ 不相容，需保留题设初值并在时间离散中解析启动层。
