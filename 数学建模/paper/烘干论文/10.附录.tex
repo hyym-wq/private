@@ -1,0 +1,27 @@
+% 10.附录.tex —— 附录
+\appendix
+\section{附录}
+附件说明如表 \ref{tab:appendix} 所示。
+
+\begin{table}[H]
+  \centering
+  \caption{附件说明表}
+  \label{tab:appendix}
+  \begin{tabular}{lp{9.6cm}}
+    \toprule
+    文件 & 说明 \\
+    \midrule
+    \texttt{code/p1\_euler.py} & 问题 1 Euler 显式求解器（中心/内部/边界三类节点离散） \\
+    \texttt{code/p1\_model.py} & 问题 1 Crank--Nicolson 求解器（Thomas 追赶法） \\
+    \texttt{code/p1\_run.py} & 主驱动，读附件 1、写表 1/表 2 与 result1.xlsx \\
+    \texttt{code/p1\_verify.py} & 验证套件（解析解、收敛阶、守恒、稳定性） \\
+    \texttt{code/p4\_model.py} & 问题 4 Landau 变换移动边界守恒算子、求解器与二分终止 \\
+    \texttt{code/p4\_run.py} & 问题 4 交付口径求解（$N=800$），写表 6 与 result4.xlsx \\
+    \texttt{code/p4\_verify.py} & 问题 4 V1--V7 验证套件（收敛、符号、守恒等） \\
+    \texttt{results/result1.xlsx} & 1800 s $\times$ 21 个半径位置的完整结果 \\
+    \texttt{results/result4.xlsx} & 问题 4 水分浓度，自 60 s 起每 60 s、径向每 0.1 cm \\
+    \texttt{figures/fig1*.pdf} & 预热平衡阶段径向剖面等图件 \\
+    \texttt{figures/fig16*--fig19*.pdf} & 问题 4 收缩半径、移动边界剖面、特征位置时程与验证对比 \\
+    \bottomrule
+  \end{tabular}
+\end{table}

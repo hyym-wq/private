@@ -23,8 +23,8 @@
 
 % ================= 摘要 =================
 \begin{center}
-{\Large\bfseries 药材预热平衡阶段温度与水分浓度分布的数值求解}\\[6pt]
-{\normalsize ——基于 Euler 显式与 Crank--Nicolson 隐式格式的径向一维模型}
+{\Large\bfseries 药材烘干过程温度与水分浓度分布的建模与数值求解}\\[6pt]
+{\normalsize ——基于节点分类离散与线性化隐式差分的一维热质传递模型}
 \end{center}
 
 \begin{abstract}
@@ -32,9 +32,11 @@
 
 对于问题一，首先依据长径比与特征扩散长度将问题降维为无限长圆柱的径向一维问题，建立热传导方程与水分扩散方程；其次\textbf{完整实现 Euler 显式（向前 Euler）方法}，把径向节点严格划分为\textbf{中心点、内部点、边界点}三类分别离散：中心点用 L'H\^opital 法则消去 $1/r$ 奇异项并结合轴对称条件，内部点用柱坐标守恒型中心差分，边界点用 Robin 对流边界的半控制体积离散；显式格式逐点推进、无需解线性方程组、对变扩散系数 $D(C)$ 亦无需迭代，但受抛物型 CFL 稳定条件 $Fo=\alpha\Delta t/\Delta r^2\le0.41$ 限制（柱坐标下略严于笛卡尔情形的 $1/2$）。在此基础上\textbf{引入 Crank--Nicolson 隐式格式与 Thomas 追赶法}，将时间精度由一阶提升至二阶、并解除 CFL 限制实现无条件稳定，三对角方程组由 Thomas 追赶法以 $O(N)$ 复杂度求解。
 
-结果表明，热扩散系数约为水分扩散系数的 $34$ 倍（$\mathrm{Fo}_T=0.760$、$\mathrm{Fo}_C=0.0222$），$1800$ s 时温度场已整体抬升（中心 $33.575$ $^\circ$C、表面 $36.785$ $^\circ$C、径向温差 $3.21$ $^\circ$C），而水分场仅外层约 $1.5$ cm 壳体失水（表面含水率降幅 $40.70\%$、体积平均降幅 $10.11\%$）。数值验证表明：Euler 显式与 CN 在 $\Delta t=1$ s 下四位小数一致；CN 格式可放大时间步 $300$ 倍而不失稳，显式格式在 $Fo>0.41$ 时迅速发散。本文结论可为预热平衡阶段的工艺时间窗口提供定量依据。
+结果表明，热扩散系数约为水分扩散系数的 $34$ 倍（$\mathrm{Fo}_T=0.760$、$\mathrm{Fo}_C=0.0222$），$1800$ s 时温度场已整体抬升（中心 $33.575$ $^\circ$C、表面 $36.785$ $^\circ$C、径向温差 $3.21$ $^\circ$C），而水分场仅外层约 $1.5$ cm 壳体失水（表面含水率降幅 $40.70\%$、体积平均降幅 $10.11\%$）。数值验证表明：Euler 显式与 CN 在 $\Delta t=1$ s 下四位小数一致；CN 格式可放大时间步 $300$ 倍而不失稳，显式格式在 $Fo>0.41$ 时迅速发散。
 
-\noindent\textbf{关键词：}径向一维热质传递；Euler 显式方法；Crank--Nicolson 格式；Thomas 追赶法；CFL 稳定性
+对于问题二，针对持续 $2\sim3$ 天的整个烘干过程（预热平衡 + 恒温干燥），建立\textbf{非线性变参数热质传递模型}：密度、比热容、导热系数随含水率变化，水分扩散系数同时随含水率与温度变化（附录 3）。数值上采用\textbf{线性化隐式 FDM + 迭代}：将 $D(C,T)$ 在当前状态处作一阶 Taylor 展开线性化（Newton 型，含 $\partial D/\partial C$ 敏度项），每个时间步内 Picard 迭代 $2\sim3$ 次即收敛，温度与水分方程以\textbf{弱耦合交替}方式求解、由 Thomas 追赶法完成三对角求解。结果表明：药材约 $2$ h 完成预热并进入恒温干燥，表面含水率数小时逼近环境平衡值，中心含水率降至 $0.15$ kg/kg 约需 $57$ h（约 $2.4$ 天），与题设"$2\sim3$ 天"吻合。此外给出问题三模型的推荐：沿用弱耦合交替求解并引入\textbf{自适应时间步}（按变化率调节 $\Delta t$），可将长时间求解成本压缩约两个数量级。
+
+\noindent\textbf{关键词：}径向一维热质传递；非线性变参数模型；Taylor 线性化；Picard 迭代；Crank--Nicolson 格式；Thomas 追赶法；自适应时间步
 \end{abstract}
 
 \tableofcontents
@@ -327,7 +329,7 @@ G(\lambda)=\frac{1+(1-\theta)\lambda\Delta t}{1+\theta\lambda\Delta t},
 \end{equation}
 即旧时间层用旧系数 $D^n$、新时间层用新系数 $D^{n+1}$。若两个时间层都套用新算子，局部截断误差中将出现 $O(\Delta t)$ 的系数错配项，使 CN 退化为时间一阶。迭代至 $\|C^{(k+1)}-C^{(k)}\|_\infty<10^{-10}$（实测 2 次收敛）。
 
-\paragraph{求解流程。} 每个时间步内：① 由附件 1 取本步 $T_\infty(t),C_\infty(t)$（分段线性插值）；② 求解温度方程（常系数，一次 Thomas 求解）；③ 以 $C^n$ 组装旧算子、以当前迭代值组装新算子，作 Thomas 求解得 $C^{(k+1)}$；④ 检验收敛，未收敛返回第 ③ 步。
+\paragraph{求解流程。} 每个时间步内：(1) 由附件 1 取本步 $T_\infty(t),C_\infty(t)$（分段线性插值）；(2) 求解温度方程（常系数，一次 Thomas 求解）；(3) 以 $C^n$ 组装旧算子、以当前迭代值组装新算子，作 Thomas 求解得 $C^{(k+1)}$；(4) 检验收敛，未收敛返回第 (3) 步。
 
 \paragraph{结果。} 取 $N=20$（$\Delta r=0.1$ cm）、$\Delta t=1$ s，算至 $t=1800$ s。Euler 显式与 CN 在 $\Delta t=1$ s 下终态最大差为 $|dT|=5.02\times10^{-3}$ $^\circ$C、$|dC|=8.74\times10^{-5}$ kg/kg，二者\textbf{四位小数一致}；最终结果取时间二阶的 CN 值。表 \ref{tab:T}、\ref{tab:C} 为要求位置与时刻的结果（完整逐秒、逐 0.1 cm 数据见 \texttt{result1.xlsx}）。
 
@@ -381,8 +383,158 @@ $1800$ s 时表面含水率由 $2.55$ 降至 $1.5120$ kg/kg，表面降幅 $40.7
 \label{fig:profile}
 \end{figure}
 
-% ================= 六、模型检验与分析 =================
-\section{模型检验与分析}
+% ================= 六、问题二的模型的建立和求解 =================
+\section{问题二的模型的建立和求解}
+
+\subsection{具体分析与模型建立}
+
+\textbf{问题重述。} 问题二要求建立\textbf{整个烘干过程}（预热平衡与恒温干燥两个阶段，持续 $2\sim3$ 天）药材温度和水分浓度变化规律的数学模型，相关经验公式统一采用附录 3；在论文中按表 3、表 4 给出 $3$ h 内每隔 $0.5$ h、到药材中心距离 $0,0.5,1,1.5,2$ cm 处的温度与水分浓度，并将完整结果保存到 \texttt{result2.xlsx}。
+
+\textbf{与问题一的本质区别。} 其一，时间尺度由 $30$ min 延长到 $2\sim3$ 天，必须同时覆盖\textbf{预热平衡}（环境升温）与\textbf{恒温干燥}（环境恒温）两个阶段；其二，物性参数不再取常值：密度 $\rho$、比热容 $c_p$、导热系数 $k$ 均随含水率 $C$ 变化，水分扩散系数 $D$ 更\textbf{同时}随含水率 $C$ 与温度 $T$ 变化。这使得热、质方程由问题一的"常系数 + 单向耦合"升级为"\textbf{非线性变参数 + 双向耦合}"系统——这正是本节模型的名称"\textbf{非线性变参数热质传递模型}"的由来。
+
+控制方程为
+\begin{equation}
+\rho(C)c_p(C)\frac{\partial T}{\partial t}=\frac{1}{r}\frac{\partial}{\partial r}\left(k(C)\,r\frac{\partial T}{\partial r}\right)
+\label{eq:p2_heat}
+\end{equation}
+\begin{equation}
+\frac{\partial C}{\partial t}=\frac{1}{r}\frac{\partial}{\partial r}\left(D(C,T)\,r\frac{\partial C}{\partial r}\right)
+\label{eq:p2_mass}
+\end{equation}
+其中变参数经验公式（附录 3）为
+\begin{equation}
+\rho(C)=650+128C,\qquad
+c_p(C)=1450+2736\frac{C}{C+1},\qquad
+k(C)=0.21+0.38\frac{C}{C+1}
+\label{eq:p2_param}
+\end{equation}
+\begin{equation}
+D(C,T)=2.4\times10^{-3}\exp\!\left(-\frac{0.45}{C}\right)\exp\!\left(-\frac{3850}{T_K}\right),\qquad T_K=T+273.15
+\label{eq:p2_D}
+\end{equation}
+
+图 \ref{fig:p2_param} 给出各变参数随含水率的变化。密度、比热容、导热系数随含水率 $2.55\to0.05$ 分别下降约 $33\%$、$54\%$、$53\%$；扩散系数 $D(C,T)$ 随含水率下降呈指数减小、并随温度升高而增大，在干燥全程变化约 $3$ 个数量级，非线性显著，故必须按变参数处理。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.96\textwidth]{fig9_变参数物性.pdf}
+\caption{附录 3 变参数物性：（a）密度、比热容、导热系数随含水率的归一化变化；（b）扩散系数随含水率与温度的变化}
+\label{fig:p2_param}
+\end{figure}
+
+初边值条件与问题一形式相同：$T(r,0)=28$ $^\circ$C、$C(r,0)=2.55$ kg/kg；$r=0$ 处轴对称；$r=R$ 处 Robin 对流边界（$h=25$ W/(m$^2\cdot$K)、$h_m=8\times10^{-7}$ m/s）。环境条件 $T_\infty(t),C_\infty(t)$ 在预热平衡阶段（$0\sim14400$ s）取附件 1 分段线性插值，恒温干燥阶段维持 $14400$ s 末值（$T_\infty\approx50.2$ $^\circ$C、$C_\infty\approx0.0499$ kg/kg），这一"升温—恒温"分段处理与题设两阶段设定一致。
+
+\subsection{非线性变参数模型的线性化隐式格式}
+
+式 \eqref{eq:p2_mass} 中 $D(C,T)$ 对 $C$、$T$ 双重非线性，直接隐式离散将得到非线性代数方程组。本文构造"\textbf{线性化隐式 FDM + 迭代}"格式，其两项创新处理如下。
+
+\textbf{创新处理 1：$D(C,T)$ 在当前状态处 Taylor 展开一阶线性化。}
+将扩散系数在迭代状态 $(C^*,T^*)$ 处作一阶 Taylor 展开：
+\begin{equation}
+D(C,T)=D^*+\left.\frac{\partial D}{\partial C}\right|_*(C-C^*)+\left.\frac{\partial D}{\partial T}\right|_*(T-T^*)+O\big(\Delta^2\big)
+\label{eq:p2_taylor}
+\end{equation}
+\begin{equation}
+\frac{\partial D}{\partial C}=D\cdot\frac{0.45}{C^2},\qquad
+\frac{\partial D}{\partial T}=D\cdot\frac{3850}{T_K^2}
+\label{eq:p2_dD}
+\end{equation}
+把式 \eqref{eq:p2_taylor} 代入扩散算子 $N(C)=\tfrac1r\partial_r(D\,r\partial_rC)$，即得关于 $C$ 的 Newton 型线性化
+\begin{equation}
+N(C)\approx N(C^*)+J^*\,(C-C^*),\qquad J^*=\left.\frac{\partial N}{\partial C}\right|_{C^*}
+\label{eq:p2_newton}
+\end{equation}
+雅可比 $J^*$ 除"冻结系数"项 $D^*$ 外，还含有 $\partial D/\partial C$ 与梯度 $\nabla C^*$ 相乘的\textbf{敏度项}。相较 $0$ 阶滞后 Picard（仅冻结 $D^*$、丢弃敏度项），式 \eqref{eq:p2_newton} 把 $D$ 对 $C$ 的敏感性显式计入算子，使迭代由线性收敛提升为二次收敛，从而以更少的迭代达到同一精度。
+
+\textbf{创新处理 2：每个时间步内 Picard 迭代（2--3 次收敛）。}
+将式 \eqref{eq:p2_newton} 代入 $\theta$ 格式，得线性化隐式方程
+\begin{equation}
+\big(I-\theta\Delta t\,J^*\big)C^{n+1}=C^{n}+\Delta t\Big[\theta\big(N(C^*)-J^*C^*\big)+(1-\theta)N(C^n)\Big]
+\label{eq:p2_lin}
+\end{equation}
+当迭代收敛 $C^*=C^{n+1}$ 时，式 \eqref{eq:p2_lin} 精确退化为 $\theta$ 格式（$\theta=1/2$ 即 Crank--Nicolson，时间二阶、无条件稳定）。
+
+\textbf{弱耦合交替求解流程。} 每个时间步内：
+\begin{enumerate}[label=(\arabic*)]
+\item 温度方程 \eqref{eq:p2_heat} 对 $T$ 线性（系数 $\rho,c_p,k$ 冻结于 $C^*$），用 Thomas 追赶法求解得 $T^{n+1}$；
+\item 水分方程 \eqref{eq:p2_mass} 中 $D(C,T)$ 在 $(C^*,T^{n+1})$ 处作式 \eqref{eq:p2_taylor} 线性化，组装三对角 $J^*$ 后用 Thomas 求解得 $C^{n+1}$；
+\item 更新 $(T^*,C^*)\leftarrow(T^{n+1},C^{n+1})$，检验 $\|T^{n+1}-T^*\|_\infty$、$\|C^{n+1}-C^*\|_\infty$ 是否小于容差，否则返回第 (1) 步。
+\end{enumerate}
+热、质两个方程以"先热后质、逐次更新"的\textbf{弱耦合交替}方式联立，温度对水分（经 $D$ 的 Arrhenius 项）与水分对温度（经 $\rho,c_p,k$）的双向耦合均在该外层迭代中收敛。实测每个时间步平均迭代 $2.1$ 次即达 $10^{-8}$ 容差，验证"2--3 次收敛"。
+
+图 \ref{fig:p2_conv} 以预热期 $t=1800$ s 的单步迭代为例对比两种线性化的收敛。Taylor(Newton) 线性化第 $1$ 次迭代残差 $2.19\times10^{-4}$，第 $2$ 次即骤降至 $3.26\times10^{-11}$（单步下降约 $7$ 个数量级，呈\textbf{二次收敛}），第 $3$ 次达浮点精度；而 $0$ 阶滞后呈\textbf{线性收敛}，第 $2$ 次仅 $3.0\times10^{-8}$、需 $4$ 次才达浮点精度。这定量印证了创新处理 1 将 $D$ 的敏度项计入算子的收益。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.68\textwidth]{fig11_收敛性.pdf}
+\caption{Taylor(Newton) 线性化与 $0$ 阶滞后 Picard 的单步迭代收敛对比}
+\label{fig:p2_conv}
+\end{figure}
+
+\subsection{模型求解与结果}
+
+取 $N=20$（$\Delta r=0.1$ cm）、$\Delta t=1$ s，模拟 $3$ 天（$259200$ s）。表 \ref{tab:p2_T}、\ref{tab:p2_C} 给出 $3$ h 内要求位置的结果；图 \ref{fig:p2_dry} 给出全过程的含水率剖面演化。
+
+\begin{table}[H]
+\centering
+\caption{表 3　3 小时内药材的温度（$^\circ$C）}
+\label{tab:p2_T}
+\begin{tabular}{lccccc}
+\toprule
+时间/h & 0 cm（中心） & 0.5 cm & 1.0 cm & 1.5 cm & 2.0 cm（表面） \\
+\midrule
+0.5 & 32.1894 & 32.3822 & 32.9660 & 33.9608 & 35.4137 \\
+1.0 & 40.3818 & 40.5538 & 41.0609 & 41.8790 & 42.9985 \\
+1.5 & 45.8470 & 45.9351 & 46.1934 & 46.6056 & 47.1412 \\
+2.0 & 48.4504 & 48.4883 & 48.5987 & 48.7739 & 49.0038 \\
+2.5 & 49.4671 & 49.4793 & 49.5138 & 49.5655 & 49.6604 \\
+3.0 & 49.8496 & 49.8554 & 49.8747 & 49.9102 & 49.9664 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{表 4　3 小时内药材的水分浓度（kg/kg，干基）}
+\label{tab:p2_C}
+\begin{tabular}{lccccc}
+\toprule
+时间/h & 0 cm（中心） & 0.5 cm & 1.0 cm & 1.5 cm & 2.0 cm（表面） \\
+\midrule
+0.5 & 2.5499 & 2.5487 & 2.5249 & 2.3267 & 1.6484 \\
+1.0 & 2.5249 & 2.4941 & 2.3577 & 2.0234 & 1.4704 \\
+1.5 & 2.3854 & 2.3252 & 2.1344 & 1.8020 & 1.3470 \\
+2.0 & 2.1707 & 2.1083 & 1.9236 & 1.6258 & 1.2307 \\
+2.5 & 1.9566 & 1.9006 & 1.7359 & 1.4718 & 1.1163 \\
+3.0 & 1.7662 & 1.7165 & 1.5701 & 1.3331 & 1.0078 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{结果分析。} 温度在约 $2$ h 内整体升至环境温度 $\sim50$ $^\circ$C 附近并维持，标志预热平衡阶段结束、进入恒温干燥阶段；$3$ h 时中心 $49.850$ $^\circ$C、表面 $49.966$ $^\circ$C，径向温差已小于 $0.12$ $^\circ$C。水分为完全不同的形态：表面因对流传质快速下降（$3$ h 已由 $2.55$ 降至 $1.008$），中心因扩散缓慢仅降至 $1.766$，形成由外向内推进的浓度边界层。
+
+\textbf{全烘干过程}（图 \ref{fig:p2_dry}）：表面含水率在数小时内逼近环境平衡值 $C_\infty\approx0.05$ kg/kg，此后缓慢跟随环境；中心含水率则以近于指数的方式衰减，至 $57$ h（约 $2.4$ 天）降至 $0.15$ kg/kg，与题设"持续 $2\sim3$ 天"吻合。$72$ h 时中心含水率 $0.1364$、表面 $0.0516$。这一结果为问题三确定烘干时长提供了直接依据。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.96\textwidth]{fig10_全烘干过程剖面.pdf}
+\caption{问题二全烘干过程的径向剖面：（a）预热平衡阶段的温度剖面；（b）全烘干过程的水分浓度剖面（虚线为烘干标准 $C=0.15$ kg/kg）}
+\label{fig:p2_dry}
+\end{figure}
+
+\subsection{问题三模型的推荐}
+
+问题三要求确定"药材各处水分浓度低于 $0.15$ kg/kg"所需的烘干时间，本质是在问题二模型上作长时间推进直至满足判停条件。本文推荐如下两项处理。
+
+\textbf{(1) 温度方程与水分方程交替求解（弱耦合迭代）。} 沿用问题二的"先热后质"交替策略。进入恒温干燥阶段后温度场几乎不变（$T\approx T_\infty$），此时温度方程仅需在每个外层迭代中作一次廉价的 Thomas 求解即可，主要计算量集中在水分方程的推进上，弱耦合迭代的收敛代价可忽略。
+
+\textbf{(2) 自适应时间步：根据变化率调整 $\Delta t$。} 预热平衡阶段温度变化剧烈，须用小步长（$\Delta t\sim1$ s）；恒温干燥阶段含水率变化缓慢，可用大步长跨越。以相邻两层解的相对变化率 $\varepsilon_n=\|\mathbf u^{n+1}-\mathbf u^n\|_\infty$ 为控制量，按时间精度阶 $p$ 的比例反馈调节
+\begin{equation}
+\Delta t_{n+1}=\Delta t_{n}\cdot\operatorname{clamp}\!\Big(\big(\text{tol}/\varepsilon_n\big)^{1/(p+1)},\;\eta_{\min},\;\eta_{\max}\Big)
+\label{eq:p2_adaptive}
+\end{equation}
+其中 Crank--Nicolson 取 $p=2$，限幅因子取 $\eta_{\min}=0.5$、$\eta_{\max}=2$。当 $\varepsilon_n$ 大时自动缩步以保精度，小时自动放步以提效率。估计可将 $3$ 天模拟的时间步数由固定 $\Delta t=1$ s 的 $2.59\times10^{5}$ 步压缩约两个数量级，显著降低问题三长时间求解的计算成本。
+
 为验证模型与数值格式的有效性，进行以下检验。
 
 \subsection{误差分析}

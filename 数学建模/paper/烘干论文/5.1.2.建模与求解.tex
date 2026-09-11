@@ -1,0 +1,233 @@
+% 5.1.2.建模与求解.tex —— 5.1.2 模型建立 / 模型求解 / 结果分析
+\subsubsection{模型建立}
+\paragraph{控制方程。} 取半径为 $r$、厚度 $\dd r$ 的环形控制体（单位长度），其体积为 $2\pi r\,\dd r$。分别对控制体作能量守恒与水分质量守恒。
+
+\textbf{能量守恒}：控制体内焓的时间变化率等于两侧径向净导入的导热热流，
+\begin{equation}
+  \rho c_p\frac{\partial T}{\partial t}=\frac{1}{r}\frac{\partial}{\partial r}\!\left(k\,r\frac{\partial T}{\partial r}\right)
+  \label{eq:heat}
+\end{equation}
+
+\textbf{水分质量守恒}：控制体内水分的质量变化率等于两侧径向净导入的扩散通量，
+\begin{equation}
+  \frac{\partial C}{\partial t}=\frac{1}{r}\frac{\partial}{\partial r}\!\left(D(C)\,r\frac{\partial C}{\partial r}\right)
+  \label{eq:mass}
+\end{equation}
+
+其中 $D(C)=7\times10^{-9}e^{-0.89/C}$ 使式 \eqref{eq:mass} 成为拟线性方程，是数值处理的难点。两方程具有统一形式
+\begin{equation}
+  \frac{\partial u}{\partial t}=\frac{1}{r}\frac{\partial}{\partial r}\!\left(\beta\,r\frac{\partial u}{\partial r}\right),\qquad
+  \beta=\alpha\ \text{（热）},\ \beta=D(C)\ \text{（质）}
+  \label{eq:unified}
+\end{equation}
+
+\paragraph{定解条件。}
+\textbf{初始条件}：
+\begin{equation}
+  T(r,0)=28\ ^\circ\mathrm{C},\qquad C(r,0)=2.55\ \mathrm{kg/kg}
+  \label{eq:init}
+\end{equation}
+
+\textbf{中心对称条件}（$r=0$，由几何轴对称性，中心处无径向通量）：
+\begin{equation}
+  \left.\frac{\partial T}{\partial r}\right|_{r=0}=0,\qquad
+  \left.\frac{\partial C}{\partial r}\right|_{r=0}=0
+  \label{eq:center}
+\end{equation}
+
+\textbf{表面对流边界}（$r=R$，Robin 条件）：热侧由题设附录给出，
+\begin{equation}
+  -k\left.\frac{\partial T}{\partial r}\right|_{R}=h\left[T(R,t)-T_\infty(t)\right]
+  \label{eq:robinT}
+\end{equation}
+
+水分侧由传质类比补全：表面水分汽化通量与表面—环境水分浓度差成正比，
+\begin{equation}
+  -D(C)\left.\frac{\partial C}{\partial r}\right|_{R}=h_m\left[C(R,t)-C_\infty(t)\right]
+  \label{eq:robinC}
+\end{equation}
+
+\paragraph{无量纲特征量。} 求解前先估算特征数，以判断格式刚度与边界控制机制，如表 \ref{tab:charnum} 所示。
+
+\begin{table}[H]
+  \centering
+  \caption{无量纲特征量}
+  \label{tab:charnum}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{llcl}
+    \toprule
+    特征量 & 定义 & 数值 & 含义 \\
+    \midrule
+    热 Biot 数 & $\mathrm{Bi}_T=hR/k$ & $1.39$ & 径向温度梯度不可忽略 \\
+    质 Biot 数 & $\mathrm{Bi}_m=h_mR/D(C_0)$ & $3.24$ & 过程由内部扩散控制 \\
+    热 Fourier 数 & $\mathrm{Fo}_T=\alpha t/R^2$ & $0.760$ & 30 min 内热量已穿透至中心 \\
+    质 Fourier 数 & $\mathrm{Fo}_C=D(C_0)t/R^2$ & $0.0222$ & 30 min 内水分迁移刚起步 \\
+    特征时间比 & $\alpha/D(C_0)$ & $34.2$ & 热响应比质响应快 34 倍 \\
+    \bottomrule
+  \end{tabular}}
+\end{table}
+
+$\mathrm{Fo}_T$ 与 $\mathrm{Fo}_C$ 相差 $34$ 倍，预示温度场将达到近平衡而水分场仅表面响应。
+
+\subsubsection{模型求解}
+本节先\textbf{完整实现 Euler 显式方法}，把径向节点分为\textbf{中心点、内部点、边界点}三类分别离散；随后\textbf{引入 Crank--Nicolson 隐式格式与 Thomas 追赶法}，作为时间精度与稳定性的升级。
+
+\paragraph{第一步：Euler 显式方法的节点分类离散。}
+对式 \eqref{eq:unified} 作时间向前 Euler 离散，得
+\begin{equation}
+  \frac{u^{n+1}_j-u^{n}_j}{\Delta t}=\big(L_h u^n\big)_j
+  \qquad\Longleftrightarrow\qquad
+  u^{n+1}_j=u^{n}_j+\Delta t\,\big(L_h u^n\big)_j
+  \label{eq:explicit}
+\end{equation}
+其中 $L_h$ 为空间差分算子，右端全部取已知的第 $n$ 时刻值。空间离散按节点位置分为三类。
+
+\textbf{(i) 中心点 $j=0$。} 式 \eqref{eq:unified} 右端在 $r\to0$ 时呈 $\tfrac00$ 型不定式，用 L'H\^opital 法则并结合对称条件 \eqref{eq:center}：
+\begin{equation}
+  \lim_{r\to0}\frac{1}{r}\frac{\partial}{\partial r}\!\left(\beta\,r\frac{\partial u}{\partial r}\right)
+  =2\beta\left.\frac{\partial^2 u}{\partial r^2}\right|_{r=0}
+  \label{eq:lhopital}
+\end{equation}
+再以对称虚拟点 $u_{-1}=u_1$ 作二阶中心差分 $\partial^2u/\partial r^2|_0=2(u_1-u_0)/\Delta r^2$，得中心节点离散
+\begin{equation}
+  \frac{\dd T}{\dd t}\Big|_0=\frac{4\alpha}{\Delta r^2}(T_1-T_0),\qquad
+  \frac{\dd C}{\dd t}\Big|_0=\frac{4D_{1/2}}{\Delta r^2}(C_1-C_0)
+  \label{eq:center_disc}
+\end{equation}
+显式更新为
+\begin{equation}
+  T_0^{n+1}=T_0^{n}+\Delta t\cdot\frac{4\alpha}{\Delta r^2}\big(T_1^n-T_0^n\big)
+  \label{eq:center_explicit}
+\end{equation}
+
+\textbf{(ii) 内部点 $1\le j\le N-1$。} 对节点 $r_j=j\Delta r$ 的控制体 $[r_{j-1/2},r_{j+1/2}]$ 作守恒积分（而非直接差分），得柱坐标守恒型中心差分
+\begin{equation}
+  \frac{\dd u_j}{\dd t}=\frac{1}{r_j\Delta r^2}\Big[\beta_{j-\frac12}r_{j-\frac12}(u_{j-1}-u_j)+\beta_{j+\frac12}r_{j+\frac12}(u_{j+1}-u_j)\Big]
+  \label{eq:interior_disc}
+\end{equation}
+其中界面扩散系数取算术平均 $\beta_{j+1/2}=(\beta_j+\beta_{j+1})/2$。对热方程 $\beta\equiv\alpha$，$r_{j\pm1/2}/r_j=(j\pm1/2)/j$，显式更新为
+\begin{equation}
+  T_j^{n+1}=T_j^{n}+\Delta t\cdot\frac{\alpha}{\Delta r^2}
+  \left[\frac{j-\tfrac12}{j}\,T_{j-1}^n-2\,T_j^n+\frac{j+\tfrac12}{j}\,T_{j+1}^n\right]
+  \label{eq:interior_explicit}
+\end{equation}
+
+\textbf{(iii) 边界点 $j=N$。} 取表面节点控制体 $[r_{N-1/2},R]$（半控制体，外侧即物理表面），其径向权重为
+\begin{equation}
+  V_N=\int_{r_{N-1/2}}^{R}r\,\dd r=\frac{R\,\Delta r}{2}-\frac{\Delta r^2}{8}
+  \label{eq:VN}
+\end{equation}
+在该控制体上积分式 \eqref{eq:unified}，内侧通量用中心差分、外侧通量直接由 Robin 条件 \eqref{eq:robinT} 代入（不引入虚拟节点）：
+\begin{equation}
+  \frac{\dd T_N}{\dd t}=
+  \frac{\alpha\,r_{N-\frac12}}{V_N\,\Delta r}(T_{N-1}-T_N)
+  -\frac{R\,h}{\rho c_p\,V_N}\big[T_N-T_\infty\big]
+  \label{eq:boundary_disc}
+\end{equation}
+水分侧形式相同，仅将 $\alpha\to D_{N-1/2}$、$h/(\rho c_p)\to h_m$。显式更新为
+\begin{equation}
+  T_N^{n+1}=T_N^{n}+\Delta t\left[
+  \frac{\alpha\,r_{N-\frac12}}{V_N\,\Delta r}(T_{N-1}^n-T_N^n)
+  -\frac{R\,h}{\rho c_p\,V_N}\big(T_N^n-T_\infty^n\big)\right]
+  \label{eq:boundary_explicit}
+\end{equation}
+
+三类节点的离散结构如图 \ref{fig:nodes} 所示。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{fig7_节点分类离散.pdf}
+  \caption{径向节点三类离散示意图：（a）中心点 $j=0$ 用 L'H\^opital 法则与对称虚拟点；（b）内部点 $1\le j\le N-1$ 用柱坐标守恒型中心差分；（c）边界点 $j=N$ 用 Robin 半控制体。本图为\textbf{数值格式}示意图，用于说明三类节点的离散构造}
+  \label{fig:nodes}
+\end{figure}
+
+显式方法的关键优势在于：\textbf{右端全部使用已知的第 $n$ 时刻值}，逐点直接更新，无需解线性方程组；对拟线性方程 \eqref{eq:mass}，$D(C)$ 直接取 $C^n$ 计算（滞后取当前时刻），\textbf{无需 Picard 迭代}。
+
+\textbf{显式方法的稳定性（CFL 条件）。} 显式格式要求时间步满足抛物型稳定性条件。对柱坐标扩散算子，中心节点含 $4\alpha/\Delta r^2$ 系数、边界含 Robin 对流项，其最大特征值模 $\lambda_{\max}=0.8176$ s$^{-1}$（略大于笛卡尔情形的 $4\alpha/\Delta r^2=0.6754$ s$^{-1}$），故稳定条件为
+\begin{equation}
+  \Delta t\le\frac{2}{\lambda_{\max}}=2.446\ \text{s}
+  \qquad\Longleftrightarrow\qquad
+  Fo=\frac{\alpha\Delta t}{\Delta r^2}\le 0.413
+  \label{eq:cfl}
+\end{equation}
+即柱坐标下显式格式的稳定边界 $Fo\le0.41$，略严于笛卡尔一维的 $Fo\le1/2$。本文取 $\Delta t=1$ s（$Fo=0.169$），既满足稳定条件又使时间误差远小于空间误差。
+
+\paragraph{第二步：Crank--Nicolson 隐式格式与 Thomas 追赶法。}
+将式 \eqref{eq:center_disc}、\eqref{eq:interior_disc}、\eqref{eq:boundary_disc} 统一写为算子形式 $\dd u/\dd t=Lu+s$，其中源项 $s_j=\delta_{jN}\,g\,u_\infty$ 仅表面节点非零。取 $\theta$ 格式
+\begin{equation}
+  \big(I-\theta\Delta t\,L\big)u^{n+1}=\big(I+(1-\theta)\Delta t\,L\big)u^{n}
+  +\Delta t\big[\theta\,s^{n+1}+(1-\theta)\,s^{n}\big]
+  \label{eq:theta}
+\end{equation}
+$\theta=1/2$ 即 Crank--Nicolson；$\theta=1$ 为向后 Euler；$\theta=0$ 退化为式 \eqref{eq:explicit} 的显式格式。式 \eqref{eq:theta} 左端为三对角矩阵，用 \textbf{Thomas 追赶法}求解：先前向消元求系数 $\psi_i,\phi_i$，再后向回代，计算复杂度 $O(N)$、存储 $O(N)$。
+
+\textbf{无条件稳定性。} 对特征值 $\lambda\ge0$，$\theta$ 格式的增长因子为
+\begin{equation}
+  G(\lambda)=\frac{1+(1-\theta)\lambda\Delta t}{1+\theta\lambda\Delta t},
+  \qquad
+  |G(\lambda)|\le1\ \ \text{对任意}\ \Delta t>0\ \ (\theta\ge\tfrac12)
+  \label{eq:growth}
+\end{equation}
+故 CN 格式不受式 \eqref{eq:cfl} 的限制，时间步可按精度需要而非稳定性需要选取。
+
+\textbf{$D(C)$ 的滞后迭代。} 式 \eqref{eq:mass} 因 $D=D(C)$ 而拟线性。在每个时间步内令扩散系数取上一轮迭代的浓度（滞后），并\textbf{区分新旧时间层的算子}：
+\begin{equation}
+  \frac{u^{n+1}-u^{n}}{\Delta t}
+  =\frac12\Big[L(D^n)u^{n}+L(D^{n+1})u^{n+1}\Big]
+  \label{eq:cn_varc}
+\end{equation}
+即旧时间层用旧系数 $D^n$、新时间层用新系数 $D^{n+1}$。若两个时间层都套用新算子，局部截断误差中将出现 $O(\Delta t)$ 的系数错配项，使 CN 退化为时间一阶。迭代至 $\|C^{(k+1)}-C^{(k)}\|_\infty<10^{-10}$（实测 2 次收敛）。
+
+\paragraph{求解流程。} 每个时间步内：(1) 由附件 1 取本步 $T_\infty(t),C_\infty(t)$（分段线性插值）；(2) 求解温度方程（常系数，一次 Thomas 求解）；(3) 以 $C^n$ 组装旧算子、以当前迭代值组装新算子，作 Thomas 求解得 $C^{(k+1)}$；(4) 检验收敛，未收敛返回第 (3) 步。
+
+\paragraph{结果。} 取 $N=20$（$\Delta r=0.1$ cm）、$\Delta t=1$ s，算至 $t=1800$ s。Euler 显式与 CN 在 $\Delta t=1$ s 下终态最大差为 $|dT|=5.02\times10^{-3}$ $^\circ$C、$|dC|=8.74\times10^{-5}$ kg/kg；主要输出在四位小数下大多接近，但两种格式并非完全一致，最终结果取时间二阶的 CN 值。表 \ref{tab:T}、\ref{tab:C} 为要求位置与时刻的结果（完整逐秒、逐 0.1 cm 数据见 \texttt{result1.xlsx}）。
+
+\begin{table}[H]
+  \centering
+  \caption{表 1　30 分钟内药材的温度（$^\circ$C）}
+  \label{tab:T}
+  \begin{tabular}{lccccc}
+    \toprule
+    时间/s & 0 cm（中心） & 0.5 cm & 1.0 cm & 1.5 cm & 2.0 cm（表面） \\
+    \midrule
+    100  & 28.0001 & 28.0004 & 28.0041 & 28.0326 & 28.1786 \\
+    300  & 28.0411 & 28.0638 & 28.1514 & 28.3676 & 28.8469 \\
+    600  & 28.4537 & 28.5363 & 28.8039 & 29.3153 & 30.1640 \\
+    900  & 29.3245 & 29.4584 & 29.8753 & 30.6156 & 31.7297 \\
+    1200 & 30.5428 & 30.7098 & 31.2222 & 32.1121 & 33.4269 \\
+    1500 & 31.9957 & 32.1867 & 32.7658 & 33.7460 & 35.1204 \\
+    1800 & 33.5752 & 33.7719 & 34.3640 & 35.3619 & 36.7853 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{表 2　30 分钟内药材的水分浓度（kg/kg，干基）}
+  \label{tab:C}
+  \begin{tabular}{lccccc}
+    \toprule
+    时间/s & 0 cm（中心） & 0.5 cm & 1.0 cm & 1.5 cm & 2.0 cm（表面） \\
+    \midrule
+    100  & 2.5500 & 2.5500 & 2.5500 & 2.5500 & 2.2880 \\
+    300  & 2.5500 & 2.5500 & 2.5500 & 2.5486 & 2.0661 \\
+    600  & 2.5500 & 2.5500 & 2.5500 & 2.5342 & 1.8846 \\
+    900  & 2.5500 & 2.5500 & 2.5495 & 2.5041 & 1.7596 \\
+    1200 & 2.5500 & 2.5500 & 2.5478 & 2.4647 & 1.6619 \\
+    1500 & 2.5500 & 2.5499 & 2.5440 & 2.4212 & 1.5812 \\
+    1800 & 2.5500 & 2.5496 & 2.5376 & 2.3763 & 1.5120 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{结果分析。}
+图 \ref{fig:profile} 给出 $t=100,300,900,1800$ s 的径向剖面。温度剖面（图 \ref{fig:profile}a）在各时刻均呈中心低、表面高的单调上升形态，$1800$ s 时中心 $33.575$ $^\circ$C、表面 $36.785$ $^\circ$C，径向温差 $3.21$ $^\circ$C；此时环境温度 $T_\infty(1800)=41.513$ $^\circ$C，径向温差占“环境—中心”总位差 $7.94$ $^\circ$C 的 $40.4\%$，中心明显滞后、过程未进入拟稳态。水分为完全不同的形态（图 \ref{fig:profile}b）：$r\lesssim1$ cm 区域几乎保持初值，外侧形成陡峭浓度边界层并随时间向内推进。
+
+$1800$ s 时表面含水率由 $2.55$ 降至 $1.5120$ kg/kg，表面降幅 $40.70\%$；而体积加权平均含水率仅由 $2.5500$ 降至 $2.2921$，整体失水 $10.11\%$。失水高度集中于外层壳体，若按整体平均含水率判断干燥进度会显著低估表层干裂风险。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.96\textwidth]{fig1_预热平衡阶段剖面.pdf}
+  \caption{预热平衡阶段药材内部温度（a）与水分浓度（b）的径向剖面。本图展示问题一模型下的\textbf{物理结果}（短时热质分布形态）}
+  \label{fig:profile}
+\end{figure}

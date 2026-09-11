@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.8.19)  11 SEP 2026 09:18
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.8.19)  11 SEP 2026 11:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -978,7 +978,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 (./问题一_论文.toc
 LaTeX Font Info:    Font shape `TU/SimSun(0)/m/sl' in size <12> not available
 (Font)              Font shape `TU/SimSun(0)/m/it' tried instead on input line 
-9.
+3.
  [1
 
 ])
@@ -1013,55 +1013,53 @@ Package fontspec Info:
 (fontspec)             <->"FangSong/OT:script=hani;language=dflt;"
 
  [3] [4] [5]
-Overfull \hbox (25.17651pt too wide) in paragraph at lines 124--124
+Overfull \hbox (25.17651pt too wide) in paragraph at lines 126--126
  [][] 
  []
 
 
-Overfull \hbox (16.7874pt too wide) in paragraph at lines 138--147
+Overfull \hbox (16.7874pt too wide) in paragraph at lines 140--149
  [][] 
  []
 
 [6] [7]
 File: ../figures/fig7_节点分类离散.pdf Graphic file (type pdf)
 <use ../figures/fig7_节点分类离散.pdf>
- [8] [9]
-Missing character: There is no ① (U+2460) in font [lmroman12-regular]:mapping=t
-ex-text;!
-Missing character: There is no ② (U+2461) in font [lmroman12-regular]:mapping=t
-ex-text;!
-Missing character: There is no ③ (U+2462) in font [lmroman12-regular]:mapping=t
-ex-text;!
-Missing character: There is no ④ (U+2463) in font [lmroman12-regular]:mapping=t
-ex-text;!
-Missing character: There is no ③ (U+2462) in font [lmroman12-regular]:mapping=t
-ex-text;!
-[10]
+ [8] [9] [10]
 File: ../figures/fig1_预热平衡阶段剖面.pdf Graphic file (type pdf)
 <use ../figures/fig1_预热平衡阶段剖面.pdf>
  [11]
+File: ../figures/fig9_变参数物性.pdf Graphic file (type pdf)
+<use ../figures/fig9_变参数物性.pdf>
+ [12] [13]
+File: ../figures/fig11_收敛性.pdf Graphic file (type pdf)
+<use ../figures/fig11_收敛性.pdf>
+ [14]
+File: ../figures/fig10_全烘干过程剖面.pdf Graphic file (type pdf)
+<use ../figures/fig10_全烘干过程剖面.pdf>
+ [15] [16]
 File: ../figures/fig8_稳定性对比.pdf Graphic file (type pdf)
 <use ../figures/fig8_稳定性对比.pdf>
- [12] [13]
-Overfull \hbox (1.30795pt too wide) in paragraph at lines 470--482
+ [17] [18]
+Overfull \hbox (1.30795pt too wide) in paragraph at lines 622--634
  [][] 
  []
 
-[14] [15] (./问题一_论文.aux)
+[19] [20] (./问题一_论文.aux)
  ***********
 LaTeX2e <2026-06-01>
 L3 programming layer <2026/08/11>
  ***********
 Package rerunfilecheck Info: File `问题一_论文.out' has not changed.
-(rerunfilecheck)             Checksum: 02457C5E2FB9D3CD4DCA0169845DED08;2054.
+(rerunfilecheck)             Checksum: 14FEB19AA62348E195703187D4E73736;2646.
  ) 
 Here is how much of TeX's memory you used:
- 18873 strings out of 467745
- 429290 string characters out of 5419946
- 848315 words of memory out of 5000000
- 47762 multiletter control sequences out of 15000+600000
- 636849 words of font info for 106 fonts, out of 8000000 for 9000
+ 18936 strings out of 467745
+ 430883 string characters out of 5419946
+ 856672 words of memory out of 5000000
+ 47816 multiletter control sequences out of 15000+600000
+ 636889 words of font info for 111 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 93i,15n,111p,535b,530s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 93i,15n,111p,548b,530s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on 问题一_论文.pdf (15 pages).
+Output written on 问题一_论文.pdf (20 pages).

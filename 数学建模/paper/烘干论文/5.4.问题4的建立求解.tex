@@ -1,0 +1,138 @@
+% 5.4.问题4的建立求解.tex —— 5.4 问题四的模型的建立和求解
+\subsection{问题四的模型的建立和求解}
+
+\subsubsection{具体分析与模型建立}
+
+\textbf{问题重述。} 问题四要求考虑烘干过程中因水分流失导致的\textbf{尺寸变化（收缩）}，依据附录 4 的经验公式重新确定烘干时长（单位：h），在论文中按表 6 给出每隔 $6$ h、到药材中心距离 $0,0.5,1.0,1.5$ cm 与药材表面处的水分浓度，并将每隔 $60$ s、径向每隔 $0.1$ cm 的完整结果保存到 \texttt{result4.xlsx}。
+
+\textbf{与问题三的本质区别。} 问题一至三均假设半径 $R=2$ cm 固定不变；问题四引入附件 2 给出的\textbf{收缩半径经验数据} $R(t)$（由 $2.0$ cm 收缩至 $1.198$ cm），使扩散区域 $[0,R(t)]$ 随时间移动，成为\textbf{移动边界问题}。直接沿用固定网格会因边界运动而失效，故本文采用\textbf{坐标变换法（Landau 变换）}把移动域映射为固定域后离散求解。
+
+控制方程与问题二、三形式相同，但区域随 $R(t)$ 变化：
+\begin{equation}
+  \rho(C)c_p(C)\frac{\partial T}{\partial t}=\frac{1}{r}\frac{\partial}{\partial r}\left(k(C)\,r\frac{\partial T}{\partial r}\right),\qquad
+  \frac{\partial C}{\partial t}=\frac{1}{r}\frac{\partial}{\partial r}\left(D(C,T)\,r\frac{\partial C}{\partial r}\right),\qquad r\in[0,R(t)]
+  \label{eq:p4_pde}
+\end{equation}
+其中物性取\textbf{附录 4} 的变参数经验式（与问题二、三的附录 3 不同，物性对含水率与温度的依赖更强）：
+\begin{equation}
+  \rho=760+90C,\qquad
+  c_p=1850+2150\frac{C}{C+1},\qquad
+  k=0.12+0.20\frac{C}{C+1}
+  \label{eq:p4_param}
+\end{equation}
+\begin{equation}
+  D(C,T)=4.2\times10^{-4}\exp\!\left(-\frac{0.30}{C}\right)\exp\!\left(-\frac{3850}{T_K}\right),\qquad T_K=T+273.15
+  \label{eq:p4_D}
+\end{equation}
+定解条件与问题二相同：$T(r,0)=28$ $^\circ$C、$C(r,0)=2.55$ kg/kg；中心轴对称；表面 $r=R(t)$ 处 Robin 对流边界（$h=25$ W/(m$^2\cdot$K)、$h_m=8\times10^{-7}$ m/s），环境条件 $T_\infty(t),C_\infty(t)$ 取附件 1、$14400$ s 后维持末值。终止判据与问题三一致：$\max_r C(r,t)<0.15$ kg/kg。
+
+\subsubsection{移动边界的 Landau 变换}
+
+引入归一化坐标 $E=r/R(t)$，把移动边界 $[0,R(t)]$ 映射到\textbf{固定域} $E\in[0,1]$。由链式法则
+\begin{equation}
+  E=\frac{r}{R(t)}\ \Rightarrow\
+  \left.\frac{\partial E}{\partial t}\right|_r=-\frac{rR'}{R^2}=-\frac{ER'}{R}
+  \quad\Longrightarrow\quad
+  \left.\frac{\partial C}{\partial t}\right|_r=\left.\frac{\partial C}{\partial \tau}\right|_E-\frac{ER'}{R}\frac{\partial C}{\partial E}
+  \label{eq:p4_chain}
+\end{equation}
+代入式 \eqref{eq:p4_pde}，注意 $r=ER$、$\partial/\partial r=(1/R)\partial/\partial E$，得变换后的传质方程（热方程完全同构）：
+\begin{equation}
+  \frac{\partial C}{\partial \tau}=\frac{1}{R^2}\frac{1}{E}\frac{\partial}{\partial E}\left(E\,D\,\frac{\partial C}{\partial E}\right)\;+\;\frac{E R'}{R}\frac{\partial C}{\partial E}
+  \label{eq:p4_transformed}
+\end{equation}
+其中对流项 $+(E R'/R)\,\partial C/\partial E$ 是\textbf{坐标变换（移动网格）带来的}。\textbf{关于该对流项符号的说明：}题面给出的变换式写作 $-(E R'/R)\partial C/\partial E$，这是符号笔误。严格链式法则给出正号：物理导数 $\partial C/\partial t|_r$ 与变换导数 $\partial C/\partial\tau|_E$ 之间相差 $-ER'/R$，移项到右端后对流项为正。物理上 $R'<0$（收缩）时对流速度为负、把水分\textbf{向中心输送}，对应“收缩使水分浓缩、从而减缓浓度下降”，与干燥被推迟的直觉一致；若取负号则收缩反而加速干燥，物理错误。第 \ref{sec:p4_verify} 节的 V3 符号敏感性检验定量确认了这一点。
+
+边界条件在 $E$ 域变为：中心 $E=0$ 轴对称；表面 $E=1$ 处 $-(k/R)\partial T/\partial E=h(T-T_\infty)$、$-(D/R)\partial C/\partial E=h_m(C-C_\infty)$。
+
+\subsubsection{数值方法}
+
+\textbf{(1) 精确处理坐标变换的对流项。} 对流项 $v_E\partial/\partial E$（$v_E=E R'/R$）对温度、浓度两方程一致加入：内部用中心差分（二阶精度）、表面 $E=1$ 用单侧差分、中心 $E=0$ 系数恰为 $0$（$v_E(0)=0$）。对流项不视为扩散的扰动，而作为独立的守恒输运算子与扩散算子相加，故格式在 $R'=0$ 时\textbf{逐位退化}为问题一、二的固定域格式。该对流项不可忽略：V3 显示它使 $t_{\text{dry}}$ 由 $50.83$ h（无对流）变为 $52.40$ h，约占 $3\%$。
+
+\textbf{(2) $R(t)$ 由附件 2 数值微分得到。} 附件 2 给出 $145$ 个时刻的半径（$t=0\sim259200$ s，$R$ 由 $2.0$ 收缩至 $1.198$ cm）。$R'(t)$ 用中心差分（\texttt{np.gradient}，端点单侧）求得，再线性插值为连续函数 $R(t),R'(t)$。关键特征为\textbf{收缩高度前重}（图 \ref{fig:p4_radius}a）：前 $6$ h 半径由 $2.0$ 降至 $1.374$ cm、前 $24$ h 基本收缩至 $1.204$ cm、之后稳定在 $\sim1.2$ cm。因此对流项只在 $t\lesssim24$ h 内活跃，与“表面快速失水驱动收缩”的物理一致。
+
+\textbf{(3) 网格随边界等比例缩放。} $E$ 域取均匀有限体积网格，物理网格 $r_j(t)=E_jR(t)$ 随边界同步缩放。其一，\textbf{相对分辨率全程一致}，不像固定网格在收缩末期出现“边界层被网格跨过”的问题；其二，守恒权重 $V_j=(E_{j+1/2}^2-E_{j-1/2}^2)/2$ 与 $t$ 无关且 $\sum_jV_j=1/2$ 恒成立，离散质量守恒是恒等式而非近似（V7）。
+
+\textbf{(4) 附录 4 变物性 + 移动边界的完整模型。} 在移动域上按 Crank--Nicolson（$\theta=1/2$）隐式推进。热方程对 $T$ 线性（系数冻结于 $C$）直接 Thomas 追赶；传质方程因 $D(C,T)$ 非线性，用含敏度项 $\partial D/\partial C=D\cdot0.30/C^2$ 的 Newton 型线性化后追赶求解，每步做 $4$ 次 Picard 迭代。热质弱耦合交替：先解热场再用新温度更新 $D$ 解浓度场。
+
+\textbf{(5) 初始瞬变的启动子步。} 表面干燥边界层在数十秒内形成（表面浓度首分钟下降 $\sim0.4$ kg/kg），相对 $\Delta t=60$ s 属刚性瞬变。CN（$\theta=1/2$）非 L 稳定，大步长起步会产生非物理振荡：实测 $\Delta t=60$ s 起步时表面浓度在 $t=60$ s 偏低 $0.122$ kg/kg、$t=120$ s 又反超 $0.065$ kg/kg，振荡在 $1$ h 内衰减且只影响表面。处理为 $t<3600$ s 的每步内部用 $2$ s 子步推进，之后恢复 $\Delta t=60$ s，把表面前几分钟误差由 $\sim0.12$ 压到 $10^{-5}$ 量级；启动子步几乎不增加计算量。
+
+\subsubsection{模型求解与结果}
+
+取 $N=800$、$\Delta t=60$ s。表 \ref{tab:p4_tab6} 给出表 6 要求位置的结果；图 \ref{fig:p4_radius}、\ref{fig:p4_prof}、\ref{fig:p4_ts}、\ref{fig:p4_verify} 分别给出收缩半径、移动边界剖面、特征位置时程与验证对比。
+
+\begin{table}[H]
+  \centering
+  \caption{表 6　药材烘干过程的水分浓度（kg/kg，干基）}
+  \label{tab:p4_tab6}
+  \begin{tabular}{lccccc}
+    \toprule
+    时间/h & 0 cm（中心） & 0.5 cm & 1.0 cm & 1.5 cm & 药材表面 \\
+    \midrule
+    6  & 1.9524 & 1.7828 & 1.2571 & —— & 0.5684 \\
+    12 & 0.8705 & 0.7739 & 0.4848 & —— & 0.2145 \\
+    18 & 0.4572 & 0.4112 & 0.2641 & —— & 0.1016 \\
+    24 & 0.3058 & 0.2793 & 0.1895 & —— & 0.0710 \\
+    30 & 0.2370 & 0.2189 & 0.1549 & —— & 0.0608 \\
+    36 & 0.1992 & 0.1854 & 0.1352 & —— & 0.0565 \\
+    42 & 0.1754 & 0.1641 & 0.1223 & —— & 0.0543 \\
+    48 & 0.1591 & 0.1494 & 0.1132 & —— & 0.0531 \\
+    \midrule
+    烘干结束（$52.39$ h） & 0.1500 & 0.1412 & 0.1081 & —— & 0.0525 \\
+    \bottomrule
+  \end{tabular}
+
+  \vspace{2pt}
+  \parbox{0.92\textwidth}{\footnotesize 注：“——”表示该固定距离处材料已因收缩离开（$r\ge R(t)$，该处无药材内部水分）。由附件 2，$R(6\ \text{h})=1.374$ cm，故 1.5 cm 处在 6 h 时即已因收缩而“脱离”药材——这是移动边界与固定网格（问题一至三）在表格呈现上最直观的差别。末行为烘干结束时刻的剖面：连续口径 $52.3917$ h（$=188610$ s，二分到 $\sim1$ s）、中心 $0.1500$；交付口径按整数分钟向上取整为 $3144$ min $=52.4000$ h（见式 \eqref{eq:p4_tdry}）。}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.96\textwidth]{fig16_半径收缩与对流.pdf}
+  \caption{附件 2 的收缩半径与数值微分：（a）收缩半径 $R(t)$（前 $6$ h 掉至 $1.374$ cm、前 $24$ h 基本收缩至 $1.204$ cm、之后稳定于 $\sim1.2$ cm）；（b）中心差分导数 $R'(t)$（收缩高度前重，末段趋于 $0$）。本图用于说明\textbf{模型参数}（移动边界的收缩规律）}
+  \label{fig:p4_radius}
+\end{figure}
+
+\textbf{烘干时长（两种口径）。} 与问题三一致，本文区分两种口径避免混用：
+\textbf{(a) 连续口径}（二分到 $\sim1$ s）：$t_{\text{dry}}=188610$ s $=52.3917$ h；
+\textbf{(b) 交付口径}（整数分钟向上取整）：
+\begin{equation}
+  t_{\text{prod}}=\lceil t_{\text{dry}}/60\rceil\cdot60=188640\ \text{s}=52.4000\ \text{h}=3144\ \text{min}=52\ \text{h}\ 24\ \text{min}.
+  \label{eq:p4_tdry}
+\end{equation}
+与问题三不同，本题的空间收敛（V1：$N=400$ 与 $800$ 均为 $52.4000$ h）与时间收敛（V2：$\Delta t=60/120$ s 均为 $52.4000$ h）均收敛到\textbf{秒级一致}，不出现问题三因末端浓度变化率过小而放大的网格敏感问题，故最终答案直接取
+\begin{equation}
+  t_{\text{dry}}\approx52.4\ \text{h}.
+  \label{eq:p4_tdry_final}
+\end{equation}
+
+\textbf{结果分析。} 图 \ref{fig:p4_prof} 与表 6 显示干燥仍呈问题三的三阶段形态，但整体显著加快。核心结论如下。
+
+\textbf{其一，收缩使烘干时长缩短约 $2.46$ 倍。} 同一套附录 4 物性下，冻结 $R=2$ cm 的 $t_{\text{dry}}=129.1$ h，而计入收缩后为 $52.4$ h（图 \ref{fig:p4_ts}b、图 \ref{fig:p4_verify}c）。机制有二：扩散路径由 $2$ cm 缩短到 $\sim1.2$ cm；扩散项被 $1/R^2$ 放大，$R$ 缩小 $1.67$ 倍即放大 $2.79$ 倍。这是移动边界模型与固定域模型之间\textbf{不可忽略的系统性差别}。
+
+\textbf{其二，收缩集中在前 $24$ h，随后近似定半径干燥。} 附件 2 显示 $R$ 在前 $6$ h 掉至 $1.374$ cm、前 $24$ h 至 $1.204$ cm、之后稳定在 $1.198\sim1.200$ cm。因此对流项（浓缩效应）只在 $t\lesssim24$ h 活跃，后半程（$24\sim52$ h）本质上是“半径 $1.2$ cm 的定域干燥”，此时问题四的模型才与问题一、二的固定域格式同构。
+
+\textbf{其三，判据仍由中心控制。} 表面在 $12$ h 已达 $0.2145$、$18$ h 达 $0.1016$（早已“干透”），但中心到 $52.39$ h 才降到 $0.15$。与问题三一样，“各处低于 $0.15$”等价于“中心低于 $0.15$”（V5）。
+
+\textbf{其四，对流项是浓缩而非扩散。} 图 \ref{fig:p4_prof}b 的归一化剖面显示，固定 $E$ 处的浓度在收缩期先被“抬升”（水分被压入更小的体积），随后才随干燥单调下降；这在物理坐标图 \ref{fig:p4_prof}a 中表现为剖面右端随 $R(t)$ 同步内移。这正是 $+(E R'/R)\partial C/\partial E$ 项的物理后果。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.96\textwidth]{fig17_移动边界剖面.pdf}
+  \caption{问题四全烘干过程的径向剖面：（a）物理坐标剖面，右端随收缩内移；（b）归一化坐标 $E=r/R(t)$ 剖面，固定域 $[0,1]$ 内因对流项出现“浓缩抬升”。本图展示问题四模型下的\textbf{物理结果}（移动边界与浓缩效应）}
+  \label{fig:p4_prof}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.96\textwidth]{fig18_特征位置时程.pdf}
+  \caption{问题四特征位置的水分浓度：（a）中心、表面与固定距离（收缩离开后截断）的时程（对数刻度，虚线为烘干标准 $C=0.15$）；（b）有收缩与无收缩（$R$ 冻结 $2$ cm）的中心浓度对比。本图支撑\textbf{最终结论}（收缩显著缩短烘干时长）}
+  \label{fig:p4_ts}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.98\textwidth]{fig19_验证与对比.pdf}
+  \caption{问题四的验证与对比：（a）空间收敛（$N=100\sim800$，$t_{\text{dry}}$ 收敛到 $52.40$ h）；（b）对流项符号的物理检验（$+1$ 正确 / $0$ 无对流 / $-1$ 错误）；（c）烘干时长对比（问题四有收缩 $52.4$ h、无收缩 $129.1$ h、问题三附录 3 无收缩 $57.2$ h）。本图用于\textbf{数值格式与模型参数}验证}
+  \label{fig:p4_verify}
+\end{figure}
