@@ -1,0 +1,108 @@
+{
+  "scope": "Saved results compared at t=1..1800 s and r=0..2 cm in steps of 0.1 cm; ours at z=0. Differences are not exact errors.",
+  "sources": {
+    "ours": {
+      "path": "04_结果\\第一问\\q1_main_r16.npz",
+      "sha256": "6f297f8ad2f44bc38db1704fec20e0150b3c912400bcfd46a40e79fdbc034778"
+    },
+    "euler_cn_81_nodes": {
+      "path": "04_结果\\问题一\\数值场.npz",
+      "sha256": "9d75d13aefd3059cf923697bed5d83036b19e770820e191ac6732cbcdf15fa59"
+    },
+    "dimensionless_21_nodes": {
+      "path": "数学建模\\results\\p1_fields.npz",
+      "sha256": "0a05fd15373c23999ec3d72a1f4516947a674276968c764263d4ab07961b9fa0"
+    },
+    "dimensionless_nested_copy": {
+      "path": "数学建模\\数学建模\\results\\p1_fields.npz",
+      "sha256": "0a05fd15373c23999ec3d72a1f4516947a674276968c764263d4ab07961b9fa0"
+    }
+  },
+  "comparisons": {
+    "euler_cn_81_nodes": {
+      "T": {
+        "all_outputs_max_abs_difference": 0.00012107722207943539,
+        "max_at_time_s_radius_cm": [
+          300,
+          2.0
+        ],
+        "table_7x5_max_abs_difference": 0.00012107722207943539,
+        "final_surface": 36.78554339934537,
+        "our_final_surface": 36.78556025218466,
+        "surface_t100": 28.179977329436806,
+        "our_surface_t100": 28.180070346721187
+      },
+      "C": {
+        "all_outputs_max_abs_difference": 0.01760543329525932,
+        "max_at_time_s_radius_cm": [
+          2,
+          2.0
+        ],
+        "table_7x5_max_abs_difference": 0.0018834945556567284,
+        "final_surface": 1.5103428307611249,
+        "our_final_surface": 1.510237455469804,
+        "surface_t100": 2.2489336097608654,
+        "our_surface_t100": 2.2470501152052087
+      }
+    },
+    "dimensionless_21_nodes": {
+      "T": {
+        "all_outputs_max_abs_difference": 0.001958976900471754,
+        "max_at_time_s_radius_cm": [
+          300,
+          2.0
+        ],
+        "table_7x5_max_abs_difference": 0.001958976900471754,
+        "final_surface": 36.78528769583928,
+        "our_final_surface": 36.78556025218466,
+        "surface_t100": 28.178567517694983,
+        "our_surface_t100": 28.180070346721187
+      },
+      "C": {
+        "all_outputs_max_abs_difference": 0.06733227434626876,
+        "max_at_time_s_radius_cm": [
+          22,
+          2.0
+        ],
+        "table_7x5_max_abs_difference": 0.04095494716455317,
+        "final_surface": 1.5120244987702152,
+        "our_final_surface": 1.510237455469804,
+        "surface_t100": 2.288005062369762,
+        "our_surface_t100": 2.2470501152052087
+      }
+    }
+  },
+  "nested_solution_equals_outer": true,
+  "dimensionless": {
+    "alpha_m2_s": 1.6885553470919323e-07,
+    "initial_D_m2_s": 4.937655094173937e-09,
+    "diffusivity_ratio": 34.1975151136883,
+    "Bi_heat_radius": 1.3888888888888888,
+    "Bi_mass_radius": 3.2404045432170427,
+    "Fo_heat_radius": 0.7598499061913695,
+    "Fo_mass_radius": 0.022219447923782717,
+    "heat_diffusion_length_cm": 1.7433873995086342,
+    "moisture_diffusion_length_cm": 0.2981237858593824,
+    "half_length_over_heat_diffusion_length": 7.169949721744615,
+    "end_to_side_area_ratio": 0.08
+  },
+  "diagnostic_midplane_threshold_fronts_at_1800s": {
+    "0.001": {
+      "radius_cm": 0.7801160357864994,
+      "shell_thickness_cm": 1.2198839642135009
+    },
+    "0.01": {
+      "radius_cm": 1.1258808511031533,
+      "shell_thickness_cm": 0.8741191488968468
+    },
+    "0.05": {
+      "radius_cm": 1.430642398811405,
+      "shell_thickness_cm": 0.5693576011885951
+    }
+  },
+  "front_note": "Threshold-defined diagnostic, not a sharp physical interface; piecewise-linear interpolation on saved 865-node radial snapshot.",
+  "our_mean_moisture_reduction_percent": 10.791052942427726,
+  "our_center_ambient_gap_C": 7.9376550226743845,
+  "our_surface_ambient_gap_C": 4.727439747815339,
+  "our_radial_temperature_difference_C": 3.2102152748590456
+}
