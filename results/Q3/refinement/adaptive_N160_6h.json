@@ -1,0 +1,32 @@
+{
+  "N": 160,
+  "tol": 1e-07,
+  "maxdt_s": 60.0,
+  "elapsed_s": 2.9730634999978065,
+  "accepted_steps": 1898,
+  "rejected_steps": 462,
+  "linear_solves": 32758,
+  "max_nonlinear_iterations": 3,
+  "max_equation_residual_T": 1.99440491031877e-10,
+  "max_equation_residual_C": 4.140091047766248e-14,
+  "max_local_error_ratio": 0.9956224854650184,
+  "event": null,
+  "end_time_s": 21600.0,
+  "C_center": 1.0155510440012487,
+  "C_surface": 0.5334531368970474,
+  "min_C": 0.5334531368970474,
+  "max_radial_increase": 0.0,
+  "relative_mass_balance_residual": -2.1258866127166756e-16,
+  "table_times_h": [
+    6.0
+  ],
+  "table_C": [
+    [
+      1.0155510440012487,
+      0.9868290991148071,
+      0.9005524564037211,
+      0.7546338081071138,
+      0.5334531368970474
+    ]
+  ]
+}
