@@ -1,0 +1,35 @@
+% 4.符号说明.tex —— 四、符号说明
+\section{符号说明}
+本文使用的主要符号及其含义如表 \ref{tab:symbol} 所示。
+
+\begin{table}[H]
+  \centering
+  \caption{符号说明}
+  \label{tab:symbol}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{llll}
+    \toprule
+    符号 & 含义 & 单位 & 取值/来源 \\
+    \midrule
+    $r$ & 到药材中心的径向距离 & m & $0\le r\le R$ \\
+    $t$ & 时间 & s & $0\le t\le 1800$ \\
+    $R$ & 药材半径 & m & $0.02$ \\
+    $L$ & 药材长度 & m & $0.25$ \\
+    $T(r,t)$ & 药材内部温度 & $^\circ$C & 待求 \\
+    $C(r,t)$ & 药材含水率（干基） & kg/kg & 待求 \\
+    $T_\infty(t)$ & 烘房环境温度 & $^\circ$C & 附件 1 \\
+    $C_\infty(t)$ & 烘房环境水分浓度 & kg/kg & 附件 1 \\
+    $\rho$ & 药材密度 & kg/m$^3$ & 820 \\
+    $c_p$ & 药材比热容 & J/(kg$\cdot$K) & 2600 \\
+    $k$ & 导热系数 & W/(m$\cdot$K) & 0.36 \\
+    $h$ & 对流换热系数 & W/(m$^2\cdot$K) & 25 \\
+    $h_m$ & 对流传质系数 & m/s & $8\times10^{-7}$ \\
+    $\alpha$ & 热扩散系数 $\alpha=k/(\rho c_p)$ & m$^2$/s & $1.689\times10^{-7}$ \\
+    $D(C)$ & 水分有效扩散系数 & m$^2$/s & $7\times10^{-9}e^{-0.89/C}$ \\
+    $\Delta r$ & 径向网格步长 & m & $10^{-3}$ \\
+    $\Delta t$ & 时间步长 & s & 1 \\
+    $N$ & 径向网格数 & — & 20 \\
+    $Fo$ & Fourier 数 $Fo=\alpha\Delta t/\Delta r^2$ & — & 0.169 \\
+    \bottomrule
+  \end{tabular}}
+\end{table}

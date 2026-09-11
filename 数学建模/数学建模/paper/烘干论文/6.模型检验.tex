@@ -1,0 +1,46 @@
+% 6.模型检验.tex —— 六、模型检验
+\section{模型检验}
+为验证模型与数值格式的有效性，进行以下检验。
+
+\subsection{误差分析}
+\textbf{（1）与独立解析解对比。} 构造无限长圆柱、常环境温度对流边界下的解析解（分离变量级数解，Bessel 函数展开，取 60 项）作为基准。取 $T_\infty=50$ $^\circ$C、$N=160$、$\Delta t=0.05$ s，数值解与解析解的最大偏差在 $10^{-5}$ $^\circ$C 量级（$t=300$ s 时 $5.31\times10^{-5}$ $^\circ$C），相对误差小于 $10^{-6}$。该算例同时检验了中心 L'H\^opital 处理与表面 Robin 离散的正确性。
+
+\textbf{（2）空间与时间收敛阶。} 空间方向（固定 $\Delta t=0.02$ s，以 $N=640$ 为参考解）观测阶为 $2.01,2.02,2.07$，温度与浓度场均呈\textbf{二阶收敛}；时间方向（固定 $N=40$）CN 格式观测阶为 $2.00$，呈\textbf{时间二阶}；而 Euler 显式格式时间收敛阶为 $1.00$（一阶）。这正是引入 CN 格式的精度收益。
+
+\textbf{（3）全局守恒回代。} 以守恒权重 $w_0=\Delta r^2/8$、$w_j=r_j\Delta r$、$w_N=R\Delta r/2-\Delta r^2/8$ 作加权和，$\sum_j w_j=\Delta r^2/8$ 精确等于圆柱截面积积分，且所有内部界面通量两两相消，仅余表面项。全局热平衡与质量平衡的相对偏差分别为 $2.93\times10^{-14}$、$1.94\times10^{-14}$，在浮点舍入水平，说明离散守恒为恒等式。
+
+\subsection{灵敏度分析}
+\textbf{（1）稳定性对比。} 环境恒为 $T_\infty=50$ $^\circ$C（精确解恒有 $T\le50$ $^\circ$C），任何超界取值均为非物理放大。Crank--Nicolson 格式在 $\Delta t$ 放大至 $300$ s（$300$ 倍）时表面温度仅变化 $1.1$ $^\circ$C，验证\textbf{无条件稳定}；Euler 显式格式在 $Fo=0.405$（$\Delta t=2.4$ s）时有界，而在 $Fo=0.422$（$\Delta t=2.5$ s）时即发散至 $10^6$ 量级，与式 \eqref{eq:cfl} 的临界值 $Fo_{\text{crit}}=0.413$ 精确一致。这定量说明了“由显式升级为 CN”的直接收益：时间步可放大两个数量级而不失稳。
+
+\begin{table}[H]
+  \centering
+  \caption{显式与隐式格式的稳定性对比（$N=20$，$t_{\text{end}}=1800$ s）}
+  \label{tab:stability}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{lccccc}
+    \toprule
+    格式 & $\Delta t$ / s & $Fo=\alpha\Delta t/\Delta r^2$ & $T_{\max}$ / $^\circ$C & 物理有界 \\
+    \midrule
+    \multirow{3}{*}{Euler 显式} & 1.0 & 0.169 & $4.6642\times10^{1}$ & $\checkmark$ \\
+     & 2.4 & 0.405 & $4.6645\times10^{1}$ & $\checkmark$ \\
+     & 2.5 & 0.422 & $1.1553\times10^{6}$ & $\times$ \\
+    \midrule
+    \multirow{3}{*}{Crank--Nicolson} & 10 & — & $46.6396$ & $\checkmark$ \\
+     & 60 & — & $46.6264$ & $\checkmark$ \\
+     & 300 & — & $46.4007$ & $\checkmark$ \\
+    \bottomrule
+  \end{tabular}}
+\end{table}
+
+图 \ref{fig:stability} 直观对比了二者的稳定性行为。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.96\textwidth]{fig8_稳定性对比.pdf}
+  \caption{Euler 显式与 Crank--Nicolson 的稳定性对比：（a）显式格式在 $Fo>0.41$ 后非物理发散（对数刻度）；（b）CN 格式任意 $\Delta t$ 保持有界（线性刻度）}
+  \label{fig:stability}
+\end{figure}
+
+\textbf{（2）热物性参数敏感性。} 热扩散系数 $\alpha$ 变化 $\pm20\%$ 使中心温度变化约 $\mp0.6$ $^\circ$C、表面温度仅约 $\pm0.2$ $^\circ$C，且符号相反——$\alpha$ 越小表面热量越难向内传导，表面温度越接近环境温度。故热物性不确定性主要影响内部温度而非表面温度。
+
+\textbf{（3）扩散系数非线性影响。} 将 $D$ 强制取常值 $D(C_0)$ 重算作为基线，常系数近似高估整体失水量 $1.25\%$（表面浓度高估 $2.72\%$）。方向与 $D(C)$ 的负反馈（自减速）机制一致，但幅度小，因 30 min 内浓度变化集中于表层。

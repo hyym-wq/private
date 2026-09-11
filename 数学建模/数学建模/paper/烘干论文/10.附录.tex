@@ -1,0 +1,22 @@
+% 10.附录.tex —— 附录
+\appendix
+\section{附录}
+附件说明如表 \ref{tab:appendix} 所示。
+
+\begin{table}[H]
+  \centering
+  \caption{附件说明表}
+  \label{tab:appendix}
+  \begin{tabular}{ll}
+    \toprule
+    文件 & 说明 \\
+    \midrule
+    \texttt{code/p1\_euler.py} & 问题 1 Euler 显式求解器（中心/内部/边界三类节点离散） \\
+    \texttt{code/p1\_model.py} & 问题 1 Crank--Nicolson 求解器（Thomas 追赶法） \\
+    \texttt{code/p1\_run.py} & 主驱动，读附件 1、写表 1/表 2 与 result1.xlsx \\
+    \texttt{code/p1\_verify.py} & 验证套件（解析解、收敛阶、守恒、稳定性） \\
+    \texttt{results/result1.xlsx} & 1800 s $\times$ 21 个半径位置的完整结果 \\
+    \texttt{figures/fig1*.pdf} & 预热平衡阶段径向剖面等图件 \\
+    \bottomrule
+  \end{tabular}
+\end{table}

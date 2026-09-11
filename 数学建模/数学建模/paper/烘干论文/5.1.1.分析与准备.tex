@@ -1,0 +1,40 @@
+% 5.1.1.分析与准备.tex —— 5.1.1 具体分析与模型准备
+\subsubsection{具体分析}
+问题一要求给出预热平衡阶段药材内部温度与水分浓度的时空分布，属于\textbf{机理分析}类问题。本问采用\textbf{有限差分法}进行求解：首先建立径向一维热质传递的偏微分方程模型，接着用 Euler 显式方法完成初步求解，再用 Crank--Nicolson 隐式格式改进时间精度并解除稳定性限制，最后通过 Thomas 追赶法高效求解三对角方程组。
+
+\textbf{降维依据。} 药材为半径 $R=2$ cm、长 $L=25$ cm 的圆柱，长径比 $L/(2R)=6.25$。比较特征扩散长度与几何尺寸：$30$ min 内热扩散长度 $\sqrt{\alpha t}=1.74$ cm，占半长 $12.5$ cm 的 $13.9\%$、占半径的 $87\%$；水分扩散长度 $\sqrt{D(C_0)t}=0.30$ cm，占半长 $2.4\%$、占半径的 $15\%$。热量的径向扩散长度已与半径同量级，径向梯度不可忽略；而两者相对半长都较小，轴向中段一维性成立。故将问题简化为\textbf{径向一维}。两端面面积仅占总表面积的 $R/L=8\%$，进一步支持忽略轴向。
+
+具体分析流程如图 \ref{fig:flow} 所示。
+
+\begin{figure}[H]
+  \centering
+  \fbox{\parbox{0.92\textwidth}{\centering
+  \begin{tabular}{c c c c c c c c c}
+  读取附件 & $\rightarrow$ & 建立控制方程 & $\rightarrow$ & 定解条件 & $\rightarrow$ & 节点分类离散 & $\rightarrow$ & 输出结果 \\
+  \multicolumn{9}{c}{Euler 显式（中心/内部/边界三类节点）$\;\rightarrow\;$ Crank--Nicolson + Thomas 追赶法}
+  \end{tabular}}}
+  \caption{问题一分析流程图}
+  \label{fig:flow}
+\end{figure}
+
+\subsubsection{模型准备}
+\textbf{数据来源与预处理。} 环境条件 $T_\infty(t),C_\infty(t)$ 来自附件 1，以 $60$ s 为间隔给出 $241$ 个离散点（覆盖 $0\sim14400$ s）。本计算在 $60$ s 整数倍时刻取节点值，其余时刻按\textbf{分段线性插值}取值（区间外按端点常数延拓）。该项引入的误差为 $O(\Delta t_{\text{采样}}^2 T_\infty'')$，小于空间离散误差，不构成主要误差来源。
+
+\textbf{算法选型。} 求解抛物型偏微分方程（热质传递）的常用数值方法包括 Euler 显式、Crank--Nicolson 隐式、向后 Euler 等。表 \ref{tab:algo} 从稳定性、时间精度、实现复杂度三方面进行对比。
+
+\begin{table}[H]
+  \centering
+  \caption{候选数值格式对比}
+  \label{tab:algo}
+  \begin{tabular}{lccc}
+    \toprule
+    数值格式 & 稳定性 & 时间精度 & 实现复杂度 \\
+    \midrule
+    Euler 显式（$\theta=0$） & 条件稳定（$Fo\le0.41$） & 一阶 & 低（无线性方程组） \\
+    向后 Euler（$\theta=1$） & 无条件稳定 & 一阶 & 中（需解三对角） \\
+    Crank--Nicolson（$\theta=1/2$） & 无条件稳定 & 二阶 & 中（需解三对角） \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+通过对比，本文采用“先显式后隐式”的策略：先以 Euler 显式完成求解并验证三类节点离散的正确性，再以 Crank--Nicolson 格式获得时间二阶、无条件稳定的最终结果。三对角方程组统一由 Thomas 追赶法求解。
