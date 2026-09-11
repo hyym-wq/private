@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "scope": [
+    "Q1"
+  ],
+  "generated_at": "2026-09-10T12:53:54.295582+00:00",
+  "raw_files": [
+    {
+      "path": "E:\\2026数模\\CUMCM2026Problems\\A题\\A题.pdf",
+      "size_bytes": 553320,
+      "sha256": "052d8014bff5727c019b72e44fdffaf5c145ce04050dd938baaf3527db331736"
+    },
+    {
+      "path": "E:\\2026数模\\CUMCM2026Problems\\A题\\附件\\附件1.xlsx",
+      "size_bytes": 16586,
+      "sha256": "7ef32870abeef420b89560b2530ff60dfe4255917805151d89988d0311af9dd7"
+    },
+    {
+      "path": "E:\\2026数模\\CUMCM2026Problems\\A题\\附件\\附件3\\result1.xlsx",
+      "size_bytes": 10073,
+      "sha256": "23b261b295c1b787d000eebbca6521c37075107b6fcf78724f8d395ce1798ff4"
+    }
+  ],
+  "attachment_mapping": [
+    {
+      "source": "E:\\2026数模\\CUMCM2026Problems\\A题\\A题.pdf",
+      "question": "Q1",
+      "use": "第1页问题1与第3页附录2，几何、初值、物性与输出要求"
+    },
+    {
+      "source": "E:\\2026数模\\CUMCM2026Problems\\A题\\附件\\附件1.xlsx",
+      "question": "Q1",
+      "sheet": "Sheet1",
+      "source_range": "A2:C242",
+      "header": [
+        "时间",
+        "温度",
+        "水分浓度"
+      ],
+      "use": "时变环境边界；Q1仅使用0..1800 s"
+    },
+    {
+      "source": "E:\\2026数模\\CUMCM2026Problems\\A题\\附件\\附件3\\result1.xlsx",
+      "question": "Q1",
+      "sheet_names": [
+        "温度",
+        "水分浓度"
+      ],
+      "use": "输出格式，展开省略号为21半径点与1800时间点"
+    }
+  ],
+  "fields": [
+    {
+      "name": "time_s",
+      "source": "时间",
+      "unit": "s",
+      "role": "边界时间索引"
+    },
+    {
+      "name": "T_inf_degC",
+      "source": "温度",
+      "unit": "degC",
+      "role": "环境温度"
+    },
+    {
+      "name": "C_eq_kg_per_kg",
+      "source": "水分浓度",
+      "unit": "kg/kg",
+      "role": "在等效Robin模型中直接视为C_eq；空气数据的分母原文未进一步说明"
+    }
+  ],
+  "quality": {
+    "missingness": {
+      "time_s": 0,
+      "T_inf_degC": 0,
+      "C_eq_kg_per_kg": 0
+    },
+    "duplicates": {
+      "time_keys": 0,
+      "complete_rows": 0
+    },
+    "impossible_values": {
+      "nonfinite_or_nonnumeric": 0,
+      "negative_time": 0,
+      "nonpositive_environment_moisture": 0,
+      "below_absolute_zero_temperature": 0
+    },
+    "outliers": {
+      "method": "未实施自动统计剔除；环境实测波动保留",
+      "removed_rows": 0
+    },
+    "changes": {
+      "removed_rows": 0,
+      "imputed_values": 0,
+      "rescaled_values": 0,
+      "operations": [
+        "字段重命名和CSV格式转换，数值保持原始精度"
+      ]
+    }
+  },
+  "coverage": {
+    "rows": 241,
+    "effective_sample_size": null,
+    "effective_sample_size_note": "确定性PDE边界时间序列，241是观测点数；不据此声称统计独立有效样本量。",
+    "time_range": [
+      0,
+      14400
+    ],
+    "time_gaps": {
+      "step_seconds": 60,
+      "missing_expected_timestamps": 0,
+      "strictly_increasing": true
+    },
+    "per_question": {
+      "Q1": {
+        "rows_used": 31,
+        "time_range": [
+          0,
+          1800
+        ],
+        "requires_extrapolation": false
+      }
+    },
+    "statistics": {
+      "time_s": {
+        "min": 0,
+        "max": 14400,
+        "mean": 7200,
+        "std_sample": 4182.89373520294
+      },
+      "T_inf_degC": {
+        "min": 28,
+        "max": 50.246,
+        "mean": 47.24532780082988,
+        "std_sample": 5.114769115473239
+      },
+      "C_eq_kg_per_kg": {
+        "min": 0.01963,
+        "max": 0.05025,
+        "mean": 0.044755933609958505,
+        "std_sample": 0.008136533971061675
+      }
+    },
+    "Q1_boundary_start": {
+      "time_s": 0,
+      "T_inf_degC": 28,
+      "C_eq_kg_per_kg": 0.01963
+    },
+    "Q1_boundary_end": {
+      "time_s": 1800,
+      "T_inf_degC": 41.513,
+      "C_eq_kg_per_kg": 0.03307
+    },
+    "Q1_boundary_extrema": {
+      "T_inf_degC": {
+        "min": 28,
+        "max": 41.513
+      },
+      "C_eq_kg_per_kg": {
+        "min": 0.01963,
+        "max": 0.03307
+      }
+    }
+  },
+  "distribution_risks": {
+    "class_imbalance": null,
+    "rare_categories": [],
+    "high_cardinality": [],
+    "redundancy_warnings": [],
+    "concentration_metrics": {},
+    "not_applicable_note": "无分类标签、拟合目标或评分权重，不做类别失衡或目标集中度判断。",
+    "temporal_correlation_note": "环境时间序列存在趋势与自相关；本问作外部驱动，不作回归独立样本。",
+    "max_adjacent_absolute_change": {
+      "T_inf_degC": 0.7970000000000006,
+      "C_eq_kg_per_kg": 0.00068
+    }
+  },
+  "per_question_readiness": {
+    "Q1": {
+      "status": "ready_with_warnings",
+      "usable_rows": 31,
+      "missing_required_fields": [],
+      "warnings": [
+        "干基含水率与空气水分浓度直接相减依赖等效边界闭合。",
+        "题面只要求径向输出；二维主模型输出定义为中截面z=0，端面与侧面采用同系数属于承接模型假设。",
+        "无内部温度/含水率实测值，不能声称获得实验预测精度。"
+      ]
+    }
+  },
+  "cleaned_files": [
+    {
+      "path": "02_数据\\清洗数据\\0910_第一问_烘房边界_v01_Codex.csv",
+      "sha256": "87d1922a5b775c943ab3311b18c1837233faeaad97d90429f1e33f6009ab4104",
+      "source_sha256": "7ef32870abeef420b89560b2530ff60dfe4255917805151d89988d0311af9dd7",
+      "rows": 241,
+      "columns": [
+        "time_s",
+        "T_inf_degC",
+        "C_eq_kg_per_kg"
+      ],
+      "encoding": "UTF-8 BOM"
+    }
+  ],
+  "unresolved_risks": [
+    "实测环境边界的统计误差未给出。",
+    "未额外添加无参数支持的潜热或吸附等温线。"
+  ],
+  "path_mapping": {
+    "workspace/data/data_profile.json": "02_数据/data_profile.json",
+    "workspace/data/data_report.md": "02_数据/data_report.md",
+    "workspace/data_clean": "02_数据/清洗数据"
+  }
+}

@@ -1,0 +1,255 @@
+{
+  "schema_version": 1,
+  "question": "Q1",
+  "round": "round1",
+  "implementation_target": "python",
+  "random_seed": null,
+  "determinism": "No random algorithm used.",
+  "approved_decision_id": "q1_method_choice",
+  "output_scope_confirmation": "q1_midplane_output_confirmation",
+  "methods": [
+    {
+      "method_id": "Q1_MAIN_2D_FVM_CN",
+      "role": "main",
+      "script": "03_代码/第一问/0910_第一问_热湿模型_v01_Codex.py",
+      "status": "success",
+      "execution_time_seconds": 231.8320872999975,
+      "input_files": [
+        "02_数据/清洗数据/0910_第一问_烘房边界_v01_Codex.csv"
+      ],
+      "output_files": [
+        "04_结果/第一问/q1_main_r16.npz",
+        "04_结果/第一问/result1.xlsx",
+        "04_结果/第一问/q1_export.json",
+        "04_结果/第一问/0910_第一问_结果与模型说明_v01_Codex.md",
+        "04_结果/第一问/0910_第一问_temperature_论文表_v01_Codex.csv",
+        "04_结果/第一问/0910_第一问_moisture_论文表_v01_Codex.csv"
+      ],
+      "figure_files": [
+        "05_图片/第一问/0910_第一问_中截面径向分布_v01_Codex.png",
+        "05_图片/第一问/0910_第一问_1800s二维场诊断_v01_Codex.png",
+        "05_图片/第一问/0910_第一问_二维与一维平均量对照_v01_Codex.png"
+      ],
+      "metrics_summary": {
+        "label": "q1_main_r16",
+        "dimension": 2,
+        "refinement": 16,
+        "dt_s": 0.5,
+        "grid_shape_z_r": [
+          25,
+          865
+        ],
+        "graded_startup": true,
+        "first_dt_s": 0.0001,
+        "axial_refinement": 1,
+        "radial_min_spacing_m": 3.906249999997835e-06,
+        "axial_min_spacing_m": 0.00021701388888889506,
+        "steps": 4134,
+        "max_picard_iterations": 4,
+        "mean_picard_iterations": 3.9462989840348333,
+        "cg_iterations": 61992,
+        "max_nonlinear_residual_C": 3.286040354375878e-10,
+        "max_heat_balance_residual_mean_Celsius": 2.405551886158763e-10,
+        "max_water_balance_residual_mean_kg_kg": 2.9280234920686654e-13,
+        "temperature_bounds": [
+          27.99999999999621,
+          38.914495698099074
+        ],
+        "moisture_bounds": [
+          0.8345773066749493,
+          2.550000000000122
+        ],
+        "final_center_T_C": [
+          33.575344977325614,
+          2.5499923960306665
+        ],
+        "final_midplane_surface_T_C": [
+          36.78556025218466,
+          1.510237455469804
+        ],
+        "elapsed_seconds": 231.8320872999975,
+        "input_sha256": "7ef32870abeef420b89560b2530ff60dfe4255917805151d89988d0311af9dd7",
+        "environment": {
+          "python": "3.10.9",
+          "numpy": "2.2.6",
+          "scipy": "1.15.3"
+        },
+        "status": "success"
+      },
+      "warnings": [
+        "Effective environmental moisture boundary; no latent heat or sorption closure supplied."
+      ],
+      "errors": [],
+      "output_degeneracy_evidence": {
+        "max_midplane_temperature_change_from_initial": 8.78556025218466,
+        "max_midplane_moisture_change_from_initial": 1.039762544530196,
+        "interpretation": "Near-constant center moisture is physical early-time diffusion, not solver stagnation; surface values change substantially."
+      }
+    },
+    {
+      "method_id": "Q1_BASELINE_1D_FVM_CN",
+      "role": "usable_baseline",
+      "script": "03_代码/第一问/0910_第一问_热湿模型_v01_Codex.py",
+      "status": "success",
+      "execution_time_seconds": 9.397807300003478,
+      "input_files": [
+        "02_数据/清洗数据/0910_第一问_烘房边界_v01_Codex.csv"
+      ],
+      "output_files": [
+        "04_结果/第一问/q1_baseline_r16.npz"
+      ],
+      "figure_files": [],
+      "metrics_summary": {
+        "label": "q1_baseline_r16",
+        "dimension": 1,
+        "refinement": 16,
+        "dt_s": 0.5,
+        "grid_shape_z_r": [
+          1,
+          865
+        ],
+        "graded_startup": true,
+        "first_dt_s": 0.0001,
+        "axial_refinement": 2,
+        "radial_min_spacing_m": 3.906249999997835e-06,
+        "axial_min_spacing_m": null,
+        "steps": 4134,
+        "max_picard_iterations": 4,
+        "mean_picard_iterations": 3.8642960812772134,
+        "cg_iterations": 48235,
+        "max_nonlinear_residual_C": 1.0917312923300323e-11,
+        "max_heat_balance_residual_mean_Celsius": 9.278927452782693e-11,
+        "max_water_balance_residual_mean_kg_kg": 3.528061631903612e-13,
+        "temperature_bounds": [
+          27.999999999999126,
+          36.78556004403214
+        ],
+        "moisture_bounds": [
+          1.510237455468137,
+          2.550000000000041
+        ],
+        "final_center_T_C": [
+          33.5753446033719,
+          2.54999239603055
+        ],
+        "final_midplane_surface_T_C": [
+          36.78556004403214,
+          1.510237455468137
+        ],
+        "elapsed_seconds": 9.397807300003478,
+        "input_sha256": "7ef32870abeef420b89560b2530ff60dfe4255917805151d89988d0311af9dd7",
+        "environment": {
+          "python": "3.10.9",
+          "numpy": "2.2.6",
+          "scipy": "1.15.3"
+        },
+        "status": "success"
+      },
+      "warnings": [
+        "Effective environmental moisture boundary; no latent heat or sorption closure supplied."
+      ],
+      "errors": []
+    }
+  ],
+  "comparison": {
+    "comparison_scope": "1800 output times x 21 radii, axial midplane",
+    "main_vs_1d_identical_radial_time": {
+      "temperature": {
+        "all_outputs_max_abs": 3.7395371066395455e-07,
+        "table_max_abs": 3.7395371066395455e-07,
+        "maximum_at_time_s_radius_cm": [
+          1800,
+          0.0
+        ]
+      },
+      "moisture": {
+        "all_outputs_max_abs": 2.214006755707487e-12,
+        "table_max_abs": 1.66688884917221e-12,
+        "maximum_at_time_s_radius_cm": [
+          1774,
+          1.9
+        ]
+      }
+    },
+    "time_refinement_1d_dt_half": {
+      "temperature": {
+        "all_outputs_max_abs": 5.352028296101707e-07,
+        "table_max_abs": 1.2415034689183813e-07,
+        "maximum_at_time_s_radius_cm": [
+          1021,
+          1.9
+        ]
+      },
+      "moisture": {
+        "all_outputs_max_abs": 3.8791405598814777e-07,
+        "table_max_abs": 8.337697421367807e-08,
+        "maximum_at_time_s_radius_cm": [
+          2,
+          2.0
+        ]
+      }
+    },
+    "space_refinement_1d_radial_double": {
+      "temperature": {
+        "all_outputs_max_abs": 1.1324445168270358e-06,
+        "table_max_abs": 1.0511868069329466e-06,
+        "maximum_at_time_s_radius_cm": [
+          301,
+          1.9
+        ]
+      },
+      "moisture": {
+        "all_outputs_max_abs": 8.383479272566774e-06,
+        "table_max_abs": 6.668193496928154e-06,
+        "maximum_at_time_s_radius_cm": [
+          100,
+          1.9
+        ]
+      }
+    },
+    "main_vs_finer_1d_combined": {
+      "temperature": {
+        "all_outputs_max_abs": 1.6377223701624644e-06,
+        "table_max_abs": 1.175380354823119e-06,
+        "maximum_at_time_s_radius_cm": [
+          301,
+          1.9
+        ]
+      },
+      "moisture": {
+        "all_outputs_max_abs": 8.414216552399267e-06,
+        "table_max_abs": 6.637563868316931e-06,
+        "maximum_at_time_s_radius_cm": [
+          98,
+          1.9
+        ]
+      }
+    },
+    "final_volume_means_2d": [
+      35.427858968646056,
+      2.274828149968093
+    ],
+    "final_radial_means_1d": [
+      35.16791511407301,
+      2.2935564121945617
+    ],
+    "final_volume_mean_2d_minus_1d": [
+      0.25994385457304503,
+      -0.01872826222646884
+    ],
+    "scope_limit": "Output convergence is verified at z=0; end-corner field accuracy is not certified to four decimals.",
+    "raw_result_sha256": "6f297f8ad2f44bc38db1704fec20e0150b3c912400bcfd46a40e79fdbc034778"
+  },
+  "fallback_trigger": {
+    "fallback_id": null,
+    "condition": null,
+    "observed": false,
+    "evidence": "Graded startup and linear preconditioning refine the approved solver."
+  },
+  "environment": {
+    "python": "3.10.9",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "accuracy_statement": "Four decimal places are an output format. Convergence differences are numerical estimates, not observational validation."
+}

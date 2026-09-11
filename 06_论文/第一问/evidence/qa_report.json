@@ -1,0 +1,46 @@
+{
+  "status": "passed",
+  "scope": "Q1 LaTeX manuscript only, not full contest submission audit",
+  "source_run": "q1_main_r16",
+  "pdf_sha256": "553f84eed0202624965ee901d5b22f54cec0a78f0a2e3260465ee3a1b2d7a548",
+  "page_count": 8,
+  "compiler": "XeLaTeX / TeX Live 2025, two passes",
+  "compiler_warnings_or_overfull_boxes": [],
+  "pdf_table_cells_checked_against_canonical_export": 70,
+  "label_count": 26,
+  "reference_count": 11,
+  "all_input_and_figure_files_exist": true,
+  "source_hashes_current": true,
+  "visual_review": {
+    "reviewed_by": "assistant",
+    "render_tool": "pdftoppm",
+    "page_images": [
+      "build/qa/final-1.png",
+      "build/qa/final-2.png",
+      "build/qa/final-3.png",
+      "build/qa/final-4.png",
+      "build/qa/final-5.png",
+      "build/qa/final-6.png",
+      "build/qa/final-7.png",
+      "build/qa/final-8.png"
+    ],
+    "status": "passed",
+    "findings": "All pages inspected; no clipped formulas, overlapping labels or unreadable tables. Parameter table kept with opening section."
+  },
+  "mathematical_review": "Independent reviewer checked PDEs, Robin signs, Picard/CN, Bessel reference and conservation normalization; suggested wording corrections applied.",
+  "independent_pdf_numerical_review": {
+    "status": "passed",
+    "table_cells": 70,
+    "table_time_labels": 14,
+    "convergence_metrics": 8,
+    "numeric_macros": 11,
+    "residual_values": 3,
+    "bessel_comparison_values": 2
+  },
+  "limitations_preserved": [
+    "Ceq empirical closure",
+    "midplane convergence scope",
+    "no internal experimental validation",
+    "not full-domain four-decimal certification"
+  ]
+}

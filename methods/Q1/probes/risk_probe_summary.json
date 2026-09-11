@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "question": "Q1",
+  "scope": "completed Q1 numerical verification for official midplane outputs",
+  "status": "PASS_WITH_DISCLOSED_MODEL_ASSUMPTIONS",
+  "checks": [
+    {
+      "name": "input_coverage",
+      "status": "observed",
+      "evidence": "02_数据/data_profile.json",
+      "finding": "0..1800 s共31输入点、60 s等间隔、无缺失重复、不需要外推"
+    },
+    {
+      "name": "template_layout",
+      "status": "observed",
+      "evidence": "E:\\2026数模\\CUMCM2026Problems\\A题\\附件\\附件3\\result1.xlsx",
+      "finding": "温度/水分浓度两个工作表；正式扩展为1800x21值矩阵"
+    },
+    {
+      "name": "initial_boundary_compatibility",
+      "status": "PASS",
+      "finding": "保留原初值，用隐式半步与分级小步处理启动层，未裁剪数值。",
+      "evidence": "03_代码/第一问/0910_第一问_热湿模型_v01_Codex.py"
+    },
+    {
+      "name": "diffusivity_conservative_form",
+      "status": "PASS",
+      "finding": "变系数保留散度形式；内部通量反对称、中心控制体和全局平衡经独立审查。",
+      "evidence": "03_代码/第一问/reviews/q1_independent_checks.json"
+    },
+    {
+      "name": "end_effect",
+      "status": "PASS",
+      "finding": "中截面与1D差异极小，但体积平均状态受端面影响。",
+      "evidence": "04_结果/第一问/experiments/round1/metrics/q1_convergence.json"
+    },
+    {
+      "name": "nonlinear_convergence",
+      "status": "PASS",
+      "finding": "所有步收敛；最大非线性残差3.2861e-10。",
+      "evidence": "04_结果/第一问/q1_main_r16_summary.json"
+    },
+    {
+      "name": "mass_heat_balance",
+      "status": "PASS",
+      "finding": "归一化最大温度平衡残差2.4056e-10°C，含水率平衡残差2.9281e-13kg/kg。",
+      "evidence": "04_结果/第一问/q1_main_r16_summary.json"
+    },
+    {
+      "name": "grid_time_convergence",
+      "status": "PASS",
+      "finding": "进一步径向加密和缩小步长检查完成；主解与细参考中截面最大差T1.6378e-6°C,C8.4143e-6kg/kg。",
+      "evidence": "04_结果/第一问/experiments/round1/metrics/q1_convergence.json"
+    }
+  ],
+  "fallback": {
+    "id": null,
+    "condition": null,
+    "activation": null
+  },
+  "not_claimed": [
+    "没有内部观测验证的物理预测精度",
+    "没有全域端角四位小数精度保证",
+    "没有人类最终结果验收或外部提交"
+  ]
+}

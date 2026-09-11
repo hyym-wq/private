@@ -1,0 +1,407 @@
+{
+  "status": "writing_snapshot_not_human_submission_freeze",
+  "created_at": "2026-09-11T01:00:25.564128+00:00",
+  "source_run": "q1_main_r16",
+  "user_authorization_quote": "根据这个内容写一个论文用latex编译，只写第一问，写法参考mathmodeling skill里面的内容",
+  "human_package_signoff": null,
+  "scope": "Q1 manuscript drafted under explicit user request; no external submission",
+  "source_hashes": {
+    "04_结果/第一问/q1_export.json": "21028647584dbb26392fe4669f01bb0030dddcc9f60f2de16981b892a5e87136",
+    "04_结果/第一问/q1_main_r16_summary.json": "df55319021083df99b5cdaba56d1120700286404d997cf5dae11ff0865e7cd21",
+    "04_结果/第一问/experiments/round1/metrics/q1_convergence.json": "71c253a0af3a6afc3faa2eadab434ad5745f9802119413d515ce5c59bf98e1c3",
+    "03_代码/第一问/reviews/q1_independent_checks.json": "ff6056722e60d519fd9933619f52edcd0b3d3b3edb26897c549d0548c083df0d"
+  },
+  "main_npz_sha256": "6f297f8ad2f44bc38db1704fec20e0150b3c912400bcfd46a40e79fdbc034778",
+  "claims": [
+    {
+      "claim_id": "table_temperature",
+      "value": [
+        [
+          28.0001,
+          28.0003,
+          28.004,
+          28.0327,
+          28.1801
+        ],
+        [
+          28.0408,
+          28.0635,
+          28.1514,
+          28.3681,
+          28.8489
+        ],
+        [
+          28.4533,
+          28.536,
+          28.8039,
+          29.3159,
+          30.1652
+        ],
+        [
+          29.3243,
+          29.4583,
+          29.8755,
+          30.6161,
+          31.7304
+        ],
+        [
+          30.5427,
+          30.7098,
+          31.2223,
+          32.1126,
+          33.4276
+        ],
+        [
+          31.9957,
+          32.1867,
+          32.766,
+          33.7463,
+          35.1203
+        ],
+        [
+          33.5753,
+          33.772,
+          34.3642,
+          35.3621,
+          36.7856
+        ]
+      ],
+      "unit": "Celsius",
+      "source_file": "04_结果/第一问/q1_export.json",
+      "source_locator": "$.table_temperature",
+      "time_s": [
+        100,
+        300,
+        600,
+        900,
+        1200,
+        1500,
+        1800
+      ],
+      "radii_cm": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2
+      ]
+    },
+    {
+      "claim_id": "table_moisture",
+      "value": [
+        [
+          2.55,
+          2.55,
+          2.55,
+          2.55,
+          2.2471
+        ],
+        [
+          2.55,
+          2.55,
+          2.55,
+          2.5492,
+          2.0508
+        ],
+        [
+          2.55,
+          2.55,
+          2.55,
+          2.5353,
+          1.877
+        ],
+        [
+          2.55,
+          2.55,
+          2.5497,
+          2.5045,
+          1.7547
+        ],
+        [
+          2.55,
+          2.55,
+          2.5482,
+          2.4646,
+          1.6586
+        ],
+        [
+          2.55,
+          2.5499,
+          2.5445,
+          2.4206,
+          1.5787
+        ],
+        [
+          2.55,
+          2.5497,
+          2.5383,
+          2.3755,
+          1.5102
+        ]
+      ],
+      "unit": "kg/kg dry basis",
+      "source_file": "04_结果/第一问/q1_export.json",
+      "source_locator": "$.table_moisture",
+      "time_s": [
+        100,
+        300,
+        600,
+        900,
+        1200,
+        1500,
+        1800
+      ],
+      "radii_cm": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2
+      ]
+    },
+    {
+      "claim_id": "FinalCenterT",
+      "value": 33.5753,
+      "unit": "Celsius",
+      "source_file": "04_结果/第一问/q1_export.json",
+      "source_locator": "$.table_temperature[6][0]",
+      "latex_display": "33.5753"
+    },
+    {
+      "claim_id": "FinalSurfaceT",
+      "value": 36.7856,
+      "unit": "Celsius",
+      "source_file": "04_结果/第一问/q1_export.json",
+      "source_locator": "$.table_temperature[6][4]",
+      "latex_display": "36.7856"
+    },
+    {
+      "claim_id": "FinalCenterC",
+      "value": 2.55,
+      "unit": "kg/kg",
+      "source_file": "04_结果/第一问/q1_export.json",
+      "source_locator": "$.table_moisture[6][0]",
+      "latex_display": "2.5500"
+    },
+    {
+      "claim_id": "FinalSurfaceC",
+      "value": 1.5102,
+      "unit": "kg/kg",
+      "source_file": "04_结果/第一问/q1_export.json",
+      "source_locator": "$.table_moisture[6][4]",
+      "latex_display": "1.5102"
+    },
+    {
+      "claim_id": "NonlinearResidual",
+      "value": 3.286040354375878e-10,
+      "unit": "kg/kg",
+      "source_file": "04_结果/第一问/q1_main_r16_summary.json",
+      "source_locator": "$.max_nonlinear_residual_C",
+      "latex_display": "3.29\\times10^{-10}"
+    },
+    {
+      "claim_id": "HeatResidual",
+      "value": 2.405551886158763e-10,
+      "unit": "Celsius",
+      "source_file": "04_结果/第一问/q1_main_r16_summary.json",
+      "source_locator": "$.max_heat_balance_residual_mean_Celsius",
+      "latex_display": "2.41\\times10^{-10}"
+    },
+    {
+      "claim_id": "WaterResidual",
+      "value": 2.9280234920686654e-13,
+      "unit": "kg/kg",
+      "source_file": "04_结果/第一问/q1_main_r16_summary.json",
+      "source_locator": "$.max_water_balance_residual_mean_kg_kg",
+      "latex_display": "2.93\\times10^{-13}"
+    },
+    {
+      "claim_id": "SeriesDifference",
+      "value": 1.5648552675884275e-08,
+      "unit": "Celsius",
+      "source_file": "03_代码/第一问/reviews/q1_independent_checks.json",
+      "source_locator": "$.analytic_reference.comparison_256_512_modes_max_Celsius",
+      "latex_display": "1.56\\times10^{-8}"
+    },
+    {
+      "claim_id": "AnalyticError",
+      "value": 2.1657593016755072e-06,
+      "unit": "Celsius",
+      "source_file": "03_代码/第一问/reviews/q1_independent_checks.json",
+      "source_locator": "$.saved_runs.q1_main_r16.heat_error_analytic_max_Celsius",
+      "latex_display": "2.17\\times10^{-6}"
+    },
+    {
+      "claim_id": "MeanDeltaT",
+      "value": 0.25994385457304503,
+      "unit": "Celsius",
+      "source_file": "04_结果/第一问/experiments/round1/metrics/q1_convergence.json",
+      "source_locator": "$.final_volume_mean_2d_minus_1d[0]",
+      "latex_display": "+0.2599"
+    },
+    {
+      "claim_id": "MeanDeltaC",
+      "value": -0.01872826222646884,
+      "unit": "kg/kg",
+      "source_file": "04_结果/第一问/experiments/round1/metrics/q1_convergence.json",
+      "source_locator": "$.final_volume_mean_2d_minus_1d[1]",
+      "latex_display": "-0.0187"
+    },
+    {
+      "claim_id": "main_vs_1d_identical_radial_time",
+      "value": [
+        3.7395371066395455e-07,
+        2.214006755707487e-12
+      ],
+      "unit": [
+        "Celsius",
+        "kg/kg"
+      ],
+      "source_file": "04_结果/第一问/experiments/round1/metrics/q1_convergence.json",
+      "source_locator": "$.main_vs_1d_identical_radial_time.{temperature,moisture}.all_outputs_max_abs",
+      "limitation": "z=0 at 1800 x 21 outputs; not an analytic error bound"
+    },
+    {
+      "claim_id": "time_refinement_1d_dt_half",
+      "value": [
+        5.352028296101707e-07,
+        3.8791405598814777e-07
+      ],
+      "unit": [
+        "Celsius",
+        "kg/kg"
+      ],
+      "source_file": "04_结果/第一问/experiments/round1/metrics/q1_convergence.json",
+      "source_locator": "$.time_refinement_1d_dt_half.{temperature,moisture}.all_outputs_max_abs",
+      "limitation": "z=0 at 1800 x 21 outputs; not an analytic error bound"
+    },
+    {
+      "claim_id": "space_refinement_1d_radial_double",
+      "value": [
+        1.1324445168270358e-06,
+        8.383479272566774e-06
+      ],
+      "unit": [
+        "Celsius",
+        "kg/kg"
+      ],
+      "source_file": "04_结果/第一问/experiments/round1/metrics/q1_convergence.json",
+      "source_locator": "$.space_refinement_1d_radial_double.{temperature,moisture}.all_outputs_max_abs",
+      "limitation": "z=0 at 1800 x 21 outputs; not an analytic error bound"
+    },
+    {
+      "claim_id": "main_vs_finer_1d_combined",
+      "value": [
+        1.6377223701624644e-06,
+        8.414216552399267e-06
+      ],
+      "unit": [
+        "Celsius",
+        "kg/kg"
+      ],
+      "source_file": "04_结果/第一问/experiments/round1/metrics/q1_convergence.json",
+      "source_locator": "$.main_vs_finer_1d_combined.{temperature,moisture}.all_outputs_max_abs",
+      "limitation": "z=0 at 1800 x 21 outputs; not an analytic error bound"
+    },
+    {
+      "claim_id": "final_volume_means_2d",
+      "value": [
+        35.427858968646056,
+        2.274828149968093
+      ],
+      "unit": [
+        "Celsius",
+        "kg/kg"
+      ],
+      "source_file": "04_结果/第一问/experiments/round1/metrics/q1_convergence.json",
+      "source_locator": "$.final_volume_means_2d",
+      "limitation": "Full-volume means used as structural comparison, not four-decimal certification"
+    },
+    {
+      "claim_id": "final_radial_means_1d",
+      "value": [
+        35.16791511407301,
+        2.2935564121945617
+      ],
+      "unit": [
+        "Celsius",
+        "kg/kg"
+      ],
+      "source_file": "04_结果/第一问/experiments/round1/metrics/q1_convergence.json",
+      "source_locator": "$.final_radial_means_1d",
+      "limitation": "Full-volume means used as structural comparison, not four-decimal certification"
+    },
+    {
+      "claim_id": "final_volume_mean_2d_minus_1d",
+      "value": [
+        0.25994385457304503,
+        -0.01872826222646884
+      ],
+      "unit": [
+        "Celsius",
+        "kg/kg"
+      ],
+      "source_file": "04_结果/第一问/experiments/round1/metrics/q1_convergence.json",
+      "source_locator": "$.final_volume_mean_2d_minus_1d",
+      "limitation": "Full-volume means used as structural comparison, not four-decimal certification"
+    }
+  ],
+  "input_parameters": {
+    "R_m": 0.02,
+    "L_m": 0.25,
+    "T0_Celsius": 28,
+    "C0_kg_kg": 2.55,
+    "rho_kg_m3": 820,
+    "cp_J_kg_K": 2600,
+    "k_W_m_K": 0.36,
+    "h_W_m2_K": 25,
+    "km_m_s": 8e-07,
+    "D_formula": "7e-9 * exp(-0.89 / C)"
+  },
+  "solver_configuration": {
+    "label": "q1_main_r16",
+    "dimension": 2,
+    "refinement": 16,
+    "dt_s": 0.5,
+    "grid_shape_z_r": [
+      25,
+      865
+    ],
+    "graded_startup": true,
+    "first_dt_s": 0.0001,
+    "axial_refinement": 1,
+    "radial_min_spacing_m": 3.906249999997835e-06,
+    "axial_min_spacing_m": 0.00021701388888889506,
+    "steps": 4134,
+    "max_picard_iterations": 4,
+    "mean_picard_iterations": 3.9462989840348333,
+    "cg_iterations": 61992,
+    "max_nonlinear_residual_C": 3.286040354375878e-10,
+    "max_heat_balance_residual_mean_Celsius": 2.405551886158763e-10,
+    "max_water_balance_residual_mean_kg_kg": 2.9280234920686654e-13,
+    "temperature_bounds": [
+      27.99999999999621,
+      38.914495698099074
+    ],
+    "moisture_bounds": [
+      0.8345773066749493,
+      2.550000000000122
+    ],
+    "final_center_T_C": [
+      33.575344977325614,
+      2.5499923960306665
+    ],
+    "final_midplane_surface_T_C": [
+      36.78556025218466,
+      1.510237455469804
+    ],
+    "elapsed_seconds": 231.8320872999975,
+    "input_sha256": "7ef32870abeef420b89560b2530ff60dfe4255917805151d89988d0311af9dd7",
+    "environment": {
+      "python": "3.10.9",
+      "numpy": "2.2.6",
+      "scipy": "1.15.3"
+    },
+    "status": "success"
+  }
+}

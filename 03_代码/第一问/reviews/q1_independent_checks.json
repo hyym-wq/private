@@ -1,0 +1,150 @@
+{
+  "canonical_main": "q1_main_r16",
+  "canonical_baseline": "q1_baseline_r16",
+  "solver_sha256": "eabbdf841ed424ccc07e4c900161a69cfdf38eba5835de8d0b3209df4229aac8",
+  "geometry_and_operator": {
+    "nodes": 21625,
+    "radial_center_actual": 8192000000.0,
+    "radial_center_expected": 8192000000.0,
+    "axial_center_actual": 38449.368945224196,
+    "axial_center_expected": 38449.368945224196,
+    "matrix_symmetry_max": 0.0,
+    "arbitrary_state_mass_balance_abs": 1.466591226056518e-21,
+    "volume_scaled": 2.5e-05,
+    "volume_scaled_expected": 2.5e-05,
+    "external_area_scaled": 0.0026999999999999997,
+    "external_area_scaled_expected": 0.0027
+  },
+  "analytic_reference": {
+    "modes": 512,
+    "comparison_256_512_modes_max_Celsius": 1.5648552675884275e-08,
+    "Biot": 1.3888888888888888,
+    "first_three_roots": [
+      1.4184725188270628,
+      4.166469601015177,
+      7.208478464380924
+    ],
+    "first_three_coefficients": [
+      1.2658221367416607,
+      -0.3779735277731624,
+      0.17496350670096852
+    ],
+    "final_center_and_surface_Celsius": [
+      33.575344825914435,
+      36.785560348549595
+    ]
+  },
+  "saved_runs": {
+    "q1_main_r16": {
+      "dimension": 2,
+      "refinement": 16,
+      "dt_s": 0.5,
+      "heat_error_analytic_max_Celsius": 2.1657593016755072e-06,
+      "heat_error_analytic_t100_1800_max_Celsius": 2.1657593016755072e-06,
+      "heat_error_analytic_final_max_Celsius": 1.5877314751833183e-07,
+      "saved_heat_balance_max_mean_Celsius": 2.405666776894577e-10,
+      "saved_water_balance_max_mean_kg_kg": 2.931543896522726e-13,
+      "nonlinear_residual_max_kg_kg": 3.286040354375878e-10,
+      "final_center_T_C": [
+        33.575344977325614,
+        2.5499923960306665
+      ],
+      "final_midplane_surface_T_C": [
+        36.78556025218466,
+        1.510237455469804
+      ],
+      "npz_sha256": "6f297f8ad2f44bc38db1704fec20e0150b3c912400bcfd46a40e79fdbc034778"
+    },
+    "q1_baseline_r16": {
+      "dimension": 1,
+      "refinement": 16,
+      "dt_s": 0.5,
+      "heat_error_analytic_max_Celsius": 2.1657130631069776e-06,
+      "heat_error_analytic_t100_1800_max_Celsius": 2.1657130631069776e-06,
+      "heat_error_analytic_final_max_Celsius": 3.324138546645372e-07,
+      "saved_heat_balance_max_mean_Celsius": 9.278533497081298e-11,
+      "saved_water_balance_max_mean_kg_kg": 3.52884388377106e-13,
+      "nonlinear_residual_max_kg_kg": 1.0917312923300323e-11,
+      "final_center_T_C": [
+        33.5753446033719,
+        2.54999239603055
+      ],
+      "final_midplane_surface_T_C": [
+        36.78556004403214,
+        1.510237455468137
+      ],
+      "npz_sha256": "9f78e0868fc416e233c400165817cf03da0f7f7ab205b717aa0d187f8c3c0512"
+    },
+    "q1_reference_r16": {
+      "dimension": 1,
+      "refinement": 16,
+      "dt_s": 0.25,
+      "heat_error_analytic_max_Celsius": 1.6604814483400787e-06,
+      "heat_error_analytic_t100_1800_max_Celsius": 1.6604814483400787e-06,
+      "heat_error_analytic_final_max_Celsius": 3.204703418191457e-07,
+      "saved_heat_balance_max_mean_Celsius": 4.375131368306029e-10,
+      "saved_water_balance_max_mean_kg_kg": 4.078959392472825e-13,
+      "nonlinear_residual_max_kg_kg": 3.25796842973661e-11,
+      "final_center_T_C": [
+        33.575344621643865,
+        2.549992396065093
+      ],
+      "final_midplane_surface_T_C": [
+        36.785560045601635,
+        1.510237457877187
+      ],
+      "npz_sha256": "d159d44fba5e37e9bbb0c0fa14722f3d66b89b1468b2967dc6375888994d157e"
+    },
+    "q1_spacecheck_r32": {
+      "dimension": 1,
+      "refinement": 32,
+      "dt_s": 0.25,
+      "heat_error_analytic_max_Celsius": 5.280369315130429e-07,
+      "heat_error_analytic_t100_1800_max_Celsius": 5.280369315130429e-07,
+      "heat_error_analytic_final_max_Celsius": 8.181520882999394e-08,
+      "saved_heat_balance_max_mean_Celsius": 2.932505793751261e-09,
+      "saved_water_balance_max_mean_kg_kg": 2.309985536186332e-12,
+      "nonlinear_residual_max_kg_kg": 4.384790684178127e-11,
+      "final_center_T_C": [
+        33.57534477131755,
+        2.5499924021148535
+      ],
+      "final_midplane_surface_T_C": [
+        36.78556027297983,
+        1.510235316312416
+      ],
+      "npz_sha256": "93e229c20f5ab8753b4b39dff01e35d66bb81b0ebad5fd2c26dd7e14750ddcbe"
+    }
+  },
+  "finite_cylinder_analytic_reference": {
+    "run": "q1_main_r16",
+    "radial_modes": 256,
+    "axial_modes": 1024,
+    "table_times_s": [
+      100,
+      300,
+      600,
+      900,
+      1200,
+      1500,
+      1800
+    ],
+    "axial_mode_doubling_max_Celsius": 4.775500528353405e-07,
+    "full_2d_table_snapshots_error_max_Celsius": 0.010135811033137543,
+    "final_snapshot_error_max_Celsius": 0.009605841723107744,
+    "final_corner_reference_Celsius": 38.91976436451075,
+    "final_corner_computed_Celsius": 38.914495698099074
+  },
+  "baseline_reproducibility": {
+    "baseline": "q1_baseline_r16",
+    "max_abs_differences": {
+      "temperature": 0.0,
+      "moisture": 0.0,
+      "snapshots_t": 0.0,
+      "snapshots_c": 0.0,
+      "balances": 0.0
+    },
+    "elapsed_seconds": 6.565352100000013,
+    "temporary_outputs_removed": true
+  }
+}

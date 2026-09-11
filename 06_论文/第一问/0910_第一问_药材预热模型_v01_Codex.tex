@@ -1,0 +1,41 @@
+% !TeX program = xelatex
+\documentclass[UTF8,a4paper,zihao=-4,fontset=fandol]{ctexart}
+\usepackage[top=23mm,bottom=23mm,left=24mm,right=24mm,headheight=15pt]{geometry}
+\usepackage{amsmath,bm,booktabs,array,multirow,graphicx,float}
+\usepackage{newtxmath}
+\setmainfont{TeX Gyre Termes}
+\usepackage{caption,fancyhdr,enumitem}
+\usepackage[hidelinks,unicode]{hyperref}
+\hypersetup{pdftitle={药材预热阶段的热传导与非线性水分扩散模型：第一问},pdfauthor={}}
+\captionsetup{font=small,labelfont=bf,labelsep=quad,skip=7pt}
+\ctexset{section={format=\large\bfseries,beforeskip=14pt,afterskip=8pt},subsection={format=\normalsize\bfseries,beforeskip=9pt,afterskip=5pt}}
+\setlist[enumerate]{leftmargin=2.1em,label=（\arabic*）,itemsep=2pt,topsep=4pt,parsep=0pt}
+\linespread{1.18}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1.5pt}
+\setlength{\abovedisplayskip}{7pt plus 2pt minus 2pt}
+\setlength{\belowdisplayskip}{7pt plus 2pt minus 2pt}
+\setlength{\textfloatsep}{12pt}
+\renewcommand{\arraystretch}{1.16}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small 药材的烘干问题}
+\fancyhead[R]{\small 第一问：预热平衡阶段}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\celsius}{{}^{\circ}\mathrm{C}}
+\newcommand{\kgkg}{\mathrm{kg/kg}}
+\newcommand{\Tin}{T_{\infty}}
+\newcommand{\Ceq}{C_{\mathrm{eq}}}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert_{\infty}}
+\input{tables/numbers.tex}
+\begin{document}
+\begin{center}
+  {\LARGE\bfseries 药材预热阶段的热传导与非线性水分扩散模型\par}
+  \vspace{7pt}
+  {\large 第一问：二维轴对称建模与中截面结果\par}
+\end{center}
+\vspace{3pt}
+\input{sections/q1.tex}
+\end{document}

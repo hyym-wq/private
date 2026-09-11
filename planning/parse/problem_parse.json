@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "scope": "Q1 only",
+  "problem_source": [
+    "E:\\2026数模\\CUMCM2026Problems\\A题\\A题.pdf",
+    "E:\\2026数模\\CUMCM2026Problems\\A题\\附件\\附件1.xlsx",
+    "E:\\2026数模\\CUMCM2026Problems\\A题\\附件\\附件3\\result1.xlsx"
+  ],
+  "global_goal": "研究圆柱药材热风烘干过程；当前仅完成第一问预热平衡阶段。",
+  "objects": [
+    "半径2 cm、长度25 cm的圆柱药材",
+    "烘房时变环境"
+  ],
+  "data_inventory": [
+    {
+      "source": "E:\\2026数模\\CUMCM2026Problems\\A题\\A题.pdf",
+      "question": "Q1",
+      "use": "第1页问题1与第3页附录2，几何、初值、物性与输出要求"
+    },
+    {
+      "source": "E:\\2026数模\\CUMCM2026Problems\\A题\\附件\\附件1.xlsx",
+      "question": "Q1",
+      "sheet": "Sheet1",
+      "source_range": "A2:C242",
+      "header": [
+        "时间",
+        "温度",
+        "水分浓度"
+      ],
+      "use": "时变环境边界；Q1仅使用0..1800 s"
+    },
+    {
+      "source": "E:\\2026数模\\CUMCM2026Problems\\A题\\附件\\附件3\\result1.xlsx",
+      "question": "Q1",
+      "sheet_names": [
+        "温度",
+        "水分浓度"
+      ],
+      "use": "输出格式，展开省略号为21半径点与1800时间点"
+    }
+  ],
+  "global_constraints": [
+    "所有题目结果保留四位小数",
+    "原始数据只读"
+  ],
+  "subquestions": [
+    {
+      "id": "Q1",
+      "statement": "建立预热平衡阶段药材温度和水分浓度变化规律数学模型；按表1和表2给出100、300、600、900、1200、1500、1800 s及到中心距离0、0.5、1、1.5、2 cm的结果；1800 s内每1 s、每0.1 cm的完整结果保存result1.xlsx。",
+      "goal": "计算0..1800 s温度与干基含水率分布并完成指定表格。",
+      "inputs": [
+        "附件1的环境温度与水分浓度",
+        "附录2物性",
+        "长度0.25 m；半径0.02 m；初始温度28 degC；初始含水率2.55 kg/kg"
+      ],
+      "unknowns_or_decisions": [
+        "温度场T",
+        "干基含水率场C",
+        "二维模型径向输出所在截面"
+      ],
+      "constraints": [
+        "使用附录2：rho=820 kg/m3, cp=2600 J/(kg K), k=0.36 W/(m K), h=25 W/(m2 K), km=8e-7 m/s, D=7e-9 exp(-0.89/C) m2/s",
+        "0<=t<=1800 s",
+        "原始附件不改写"
+      ],
+      "required_outputs": [
+        {
+          "kind": "论文温度表",
+          "times_s": [
+            100,
+            300,
+            600,
+            900,
+            1200,
+            1500,
+            1800
+          ],
+          "radii_cm": [
+            0,
+            0.5,
+            1,
+            1.5,
+            2
+          ],
+          "decimal_places": 4
+        },
+        {
+          "kind": "论文水分浓度表",
+          "times_s": [
+            100,
+            300,
+            600,
+            900,
+            1200,
+            1500,
+            1800
+          ],
+          "radii_cm": [
+            0,
+            0.5,
+            1,
+            1.5,
+            2
+          ],
+          "decimal_places": 4
+        },
+        {
+          "kind": "result1.xlsx",
+          "sheet_names": [
+            "温度",
+            "水分浓度"
+          ],
+          "time_s": {
+            "start": 1,
+            "end": 1800,
+            "step": 1
+          },
+          "radius_cm": {
+            "start": 0,
+            "end": 2,
+            "step": 0.1
+          },
+          "data_rows": 1800,
+          "radius_columns": 21,
+          "decimal_places": 4,
+          "header_A1": "时间\\到药材中心的距离"
+        }
+      ],
+      "success_criteria": [
+        "全部指定时刻与位置有结果",
+        "温度单位degC，含水率单位kg/kg",
+        "模板工作表名与时间/半径布局一致",
+        "数学假设和数值验证有可追溯记录；验证结果由实际运行产生"
+      ],
+      "dependencies": [],
+      "proposed_relationships": [
+        {
+          "relationship": "内部热传导与有效水分扩散、表面对流交换",
+          "status": "由上下文中先前提议的方法承接，非题面逐字指定"
+        }
+      ],
+      "ambiguities": [
+        {
+          "item": "空气kg/kg与药材干基kg/kg的物理分母未一致定义",
+          "resolution": "按已提出的等效Robin边界解释；披露假设"
+        },
+        {
+          "item": "二维场的到中心距离未指定方向",
+          "resolution": "承接中截面z=0径向剖面；同时给1D对照"
+        }
+      ]
+    }
+  ],
+  "missing_material": [],
+  "human_decisions_needed": [],
+  "authorization_context": {
+    "latest_user_quote": "现在开始完成第一问",
+    "interpretation": "用户在明确方法方案后授权执行第一问；仅承接Q1，不视为结果认可、冻结或提交授权。"
+  }
+}

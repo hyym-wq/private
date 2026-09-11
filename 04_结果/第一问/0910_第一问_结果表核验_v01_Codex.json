@@ -1,0 +1,57 @@
+{
+  "status": "pass",
+  "source": "q1_export.json",
+  "source_run": "q1_main_r16",
+  "cross_section": "z=0, finite-cylinder axial midplane",
+  "workbook": "result1.xlsx",
+  "comparison_tolerance": 1e-12,
+  "sha256": {
+    "q1_export.json": "21028647584dbb26392fe4669f01bb0030dddcc9f60f2de16981b892a5e87136",
+    "result1.xlsx": "c7d5842c811de2407154e52767633e48f90510c028f725465b4d5d6f84bc315f"
+  },
+  "sheets": {
+    "温度": {
+      "dimensions": [
+        1801,
+        22
+      ],
+      "time_range_s": [
+        1,
+        1800
+      ],
+      "radius_range_cm": [
+        0,
+        2
+      ],
+      "radius_step_cm": 0.1,
+      "numeric_results": 37800,
+      "max_abs_difference": 0.0,
+      "data_number_format": "0.0000",
+      "freeze_panes": "B2"
+    },
+    "水分浓度": {
+      "dimensions": [
+        1801,
+        22
+      ],
+      "time_range_s": [
+        1,
+        1800
+      ],
+      "radius_range_cm": [
+        0,
+        2
+      ],
+      "radius_step_cm": 0.1,
+      "numeric_results": 37800,
+      "max_abs_difference": 0.0,
+      "data_number_format": "0.0000",
+      "freeze_panes": "B2"
+    }
+  },
+  "notes": [
+    "Canonical JSON and XLSX numerical values are rounded to four decimal places as required; unrounded solver arrays are retained in the NPZ results.",
+    "No Excel formulas or scientific model recalculation is needed for this numerical-results export.",
+    "Mathematical accuracy and convergence are established by the solver review, separately from export checks."
+  ]
+}

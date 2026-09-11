@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "question_id": "Q1",
+  "language": "python",
+  "reviewed_files": [
+    "03_代码/第一问/0910_第一问_热湿模型_v01_Codex.py",
+    "03_代码/第一问/reviews/q1_independent_reference.py"
+  ],
+  "decision_id": "q1_method_choice",
+  "scope": "Numerical implementation, canonical arrays, tabular export, and independently derived analytical/numerical checks. Figure rendering and prose layout are handled by final artifact QA.",
+  "checks": {
+    "syntax": {
+      "status": "PASS",
+      "evidence": [
+        "Python AST parsing and runtime imports passed. Repeated the complete approved 1D baseline with the current solver; no exception."
+      ]
+    },
+    "input_contract": {
+      "status": "PASS",
+      "evidence": [
+        "Audited boundary CSV has 241 finite rows at 0..14400 s in 60 s increments; Q1 only interpolates 0..1800 s.",
+        "Raw PDF, raw boundary XLSX, template XLSX and cleaned CSV hashes match data_profile.json; original files remain unchanged.",
+        "Constants, SI geometry, temperature and dry-basis moisture initial values match the Q1 method card."
+      ]
+    },
+    "method_alignment": {
+      "status": "PASS",
+      "evidence": [
+        "2D finite-cylinder nodal FVM and 1D radial baseline implement conservative div(D grad C), true surface-node Robin fluxes, zero axis/midplane fluxes, and separate thermal/nonlinear-moisture solves for Q1.",
+        "Current-level Picard iterations converge against both increment and residual criteria; graded startup begins with two backward-Euler half steps, followed by nonlinear trapezoidal integration.",
+        "No unapproved latent heat, sorption, shrinkage, random algorithm, or model fallback was introduced.",
+        "The decision ledger contains q1_method_choice and explicit q1_midplane_output_confirmation; result scope is z=0."
+      ]
+    },
+    "reproducibility": {
+      "status": "PASS",
+      "evidence": [
+        "Repeated q1_baseline_r16 in a temporary directory using refinement=16, dimension=1, dt=0.5 and graded startup; all arrays match exactly.",
+        "All 1800x21 temperature/moisture arrays, 7 snapshot arrays and balances exactly equal the saved baseline (maximum difference 0).",
+        "Python 3.10.9, NumPy 2.2.6 and SciPy 1.15.3 are recorded. Independent reference script reproduces geometry and analytical checks."
+      ]
+    },
+    "output_contract": {
+      "status": "PASS",
+      "evidence": [
+        "Canonical main and baseline arrays have 1800 times x 21 radii, finite values, compatible times/radii, and 7 saved 2D snapshots.",
+        "Both 7x5 paper tables and all canonical JSON cells exactly equal the corresponding main NPZ arrays rounded to four decimals.",
+        "Current workbook audit identifies source_run=q1_main_r16 and verifies 75600 numeric cells, zero difference from the canonical four-decimal JSON, 0.0000 format and B2 frozen panes; current workbook/JSON hashes independently match the audit.",
+        "Run summary and convergence metrics identify actual main/baseline methods, input/output paths, runtime, residuals, model assumptions and inactive fallback."
+      ]
+    },
+    "axis_and_surface_geometry": {
+      "status": "PASS",
+      "evidence": [
+        "At the first radial node the physical operator coefficient is 4*a/dr^2; at the axial symmetry node it is 2*a/dz^2.",
+        "Scaled volume is 2.5e-5 m^3 and exterior area is 0.0027 m^2 (both omit common 2*pi); corner cells include both exposed faces.",
+        "Current canonical grid variable-D similarity-transformed operator is exactly symmetric; arbitrary-state integral balance residual is 1.4666e-21 in scaled concentration-volume units."
+      ]
+    },
+    "conservation_and_range": {
+      "status": "PASS",
+      "evidence": [
+        "Main maximum normalized heat balance residual is 2.4056e-10 degC; moisture balance residual is 2.9280e-13 kg/kg.",
+        "Main nonlinear residual is at most 3.2860e-10 kg/kg, below the specified 2e-9 tolerance.",
+        "No clipping is used; every integration step checks physical bounds. Main C is within [0.8345773,2.55] and T within [28,38.914496] up to roundoff."
+      ]
+    },
+    "independent_thermal_reference": {
+      "status": "PASS",
+      "evidence": [
+        "The 1D Bessel eigenfunction solution integrates the piecewise-linear measured ambient boundary analytically; 256-to-512-mode change is 1.5649e-8 degC.",
+        "Canonical q1_main_r16 z=0 temperature differs from this analytical reference by at most 2.1658e-6 degC over all 37800 outputs; its same-grid baseline differs by 2.1657e-6 degC.",
+        "A finite-cylinder Bessel/cosine product solution independently checks 2D boundaries: the current coarse-axial-grid full-field snapshot error is at most 0.0101358 degC; doubling axial reference modes changes the reference by 4.7755e-7 degC. Full-field values remain diagnostic."
+      ]
+    },
+    "grid_time_convergence": {
+      "status": "PASS",
+      "evidence": [
+        "Canonical q1_main_r16 versus q1_baseline_r16 differs at z=0 by at most 3.7395e-7 degC and 2.2140e-12 kg/kg.",
+        "Halving baseline time steps (q1_reference_r16) changes full outputs by at most 5.3520e-7 degC and 3.8791e-7 kg/kg.",
+        "Doubling radial resolution at dt=0.25 (q1_spacecheck_r32) changes outputs by at most 1.1324e-6 degC and 8.3835e-6 kg/kg.",
+        "Canonical main versus finer 1D reference combined differences are 1.6377e-6 degC and 8.4142e-6 kg/kg; these are convergence estimates, not observed prediction errors or a guarantee of each fourth decimal."
+      ]
+    }
+  },
+  "findings": [],
+  "residual_risks": [
+    "No internal experimental temperature/moisture observations exist; numerical agreement does not establish physical prediction accuracy.",
+    "C_eq=C_infinity and equal side/end coefficients are disclosed model assumptions. Latent heat and sorption closure are not supplied.",
+    "Official output accuracy is assessed at z=0. Full-domain endpoint fields remain diagnostic: the independently computed thermal snapshot maximum error is about 0.01014 degC with the current 25-node axial grid; four-decimal full-field accuracy is not claimed.",
+    "Nonlinear solve failure raises a descriptive error requiring a smaller-step rerun; automatic rejection/retry is not implemented or needed in these successful runs.",
+    "This review does not constitute human acceptance, numerical-claim freeze, or authorization to submit externally."
+  ],
+  "evidence": {
+    "solver_sha256": "eabbdf841ed424ccc07e4c900161a69cfdf38eba5835de8d0b3209df4229aac8",
+    "inputs": {
+      "E:\\2026数模\\CUMCM2026Problems\\A题\\A题.pdf": "052d8014bff5727c019b72e44fdffaf5c145ce04050dd938baaf3527db331736",
+      "E:\\2026数模\\CUMCM2026Problems\\A题\\附件\\附件1.xlsx": "7ef32870abeef420b89560b2530ff60dfe4255917805151d89988d0311af9dd7",
+      "E:\\2026数模\\CUMCM2026Problems\\A题\\附件\\附件3\\result1.xlsx": "23b261b295c1b787d000eebbca6521c37075107b6fcf78724f8d395ce1798ff4",
+      "02_数据\\清洗数据\\0910_第一问_烘房边界_v01_Codex.csv": "87d1922a5b775c943ab3311b18c1837233faeaad97d90429f1e33f6009ab4104"
+    },
+    "geometry_and_operator": {
+      "nodes": 21625,
+      "radial_center_actual": 8192000000.0,
+      "radial_center_expected": 8192000000.0,
+      "axial_center_actual": 38449.368945224196,
+      "axial_center_expected": 38449.368945224196,
+      "matrix_symmetry_max": 0.0,
+      "arbitrary_state_mass_balance_abs": 1.466591226056518e-21,
+      "volume_scaled": 2.5e-05,
+      "volume_scaled_expected": 2.5e-05,
+      "external_area_scaled": 0.0026999999999999997,
+      "external_area_scaled_expected": 0.0027
+    },
+    "radial_analytic_reference": {
+      "modes": 512,
+      "comparison_256_512_modes_max_Celsius": 1.5648552675884275e-08,
+      "Biot": 1.3888888888888888,
+      "first_three_roots": [
+        1.4184725188270628,
+        4.166469601015177,
+        7.208478464380924
+      ],
+      "first_three_coefficients": [
+        1.2658221367416607,
+        -0.3779735277731624,
+        0.17496350670096852
+      ],
+      "final_center_and_surface_Celsius": [
+        33.575344825914435,
+        36.785560348549595
+      ]
+    },
+    "main_run": {
+      "dimension": 2,
+      "refinement": 16,
+      "dt_s": 0.5,
+      "heat_error_analytic_max_Celsius": 2.1657593016755072e-06,
+      "heat_error_analytic_t100_1800_max_Celsius": 2.1657593016755072e-06,
+      "heat_error_analytic_final_max_Celsius": 1.5877314751833183e-07,
+      "saved_heat_balance_max_mean_Celsius": 2.405666776894577e-10,
+      "saved_water_balance_max_mean_kg_kg": 2.931543896522726e-13,
+      "nonlinear_residual_max_kg_kg": 3.286040354375878e-10,
+      "final_center_T_C": [
+        33.575344977325614,
+        2.5499923960306665
+      ],
+      "final_midplane_surface_T_C": [
+        36.78556025218466,
+        1.510237455469804
+      ],
+      "npz_sha256": "6f297f8ad2f44bc38db1704fec20e0150b3c912400bcfd46a40e79fdbc034778"
+    },
+    "baseline_run": {
+      "dimension": 1,
+      "refinement": 16,
+      "dt_s": 0.5,
+      "heat_error_analytic_max_Celsius": 2.1657130631069776e-06,
+      "heat_error_analytic_t100_1800_max_Celsius": 2.1657130631069776e-06,
+      "heat_error_analytic_final_max_Celsius": 3.324138546645372e-07,
+      "saved_heat_balance_max_mean_Celsius": 9.278533497081298e-11,
+      "saved_water_balance_max_mean_kg_kg": 3.52884388377106e-13,
+      "nonlinear_residual_max_kg_kg": 1.0917312923300323e-11,
+      "final_center_T_C": [
+        33.5753446033719,
+        2.54999239603055
+      ],
+      "final_midplane_surface_T_C": [
+        36.78556004403214,
+        1.510237455468137
+      ],
+      "npz_sha256": "9f78e0868fc416e233c400165817cf03da0f7f7ab205b717aa0d187f8c3c0512"
+    },
+    "finite_cylinder_reference": {
+      "run": "q1_main_r16",
+      "radial_modes": 256,
+      "axial_modes": 1024,
+      "table_times_s": [
+        100,
+        300,
+        600,
+        900,
+        1200,
+        1500,
+        1800
+      ],
+      "axial_mode_doubling_max_Celsius": 4.775500528353405e-07,
+      "full_2d_table_snapshots_error_max_Celsius": 0.010135811033137543,
+      "final_snapshot_error_max_Celsius": 0.009605841723107744,
+      "final_corner_reference_Celsius": 38.91976436451075,
+      "final_corner_computed_Celsius": 38.914495698099074
+    },
+    "baseline_repeat": {
+      "baseline": "q1_baseline_r16",
+      "max_abs_differences": {
+        "temperature": 0.0,
+        "moisture": 0.0,
+        "snapshots_t": 0.0,
+        "snapshots_c": 0.0,
+        "balances": 0.0
+      },
+      "elapsed_seconds": 6.565352100000013,
+      "temporary_outputs_removed": true
+    },
+    "workbook_audit": "04_结果/第一问/0910_第一问_结果表核验_v01_Codex.json",
+    "convergence_metrics": "04_结果/第一问/experiments/round1/metrics/q1_convergence.json",
+    "run_summary": "04_结果/第一问/experiments/round1/run_summary.json",
+    "independent_check_results": "03_代码/第一问/reviews/q1_independent_checks.json",
+    "current_artifact_hashes": {
+      "q1_export.json": "21028647584dbb26392fe4669f01bb0030dddcc9f60f2de16981b892a5e87136",
+      "result1.xlsx": "c7d5842c811de2407154e52767633e48f90510c028f725465b4d5d6f84bc315f"
+    }
+  },
+  "verdict": "PASSED",
+  "reviewed_at": "2026-09-11T00:37:15+00:00",
+  "canonical_main": "q1_main_r16",
+  "canonical_baseline": "q1_baseline_r16"
+}

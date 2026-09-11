@@ -1,0 +1,46 @@
+{
+  "label": "q1_spacecheck_r32",
+  "dimension": 1,
+  "refinement": 32,
+  "dt_s": 0.25,
+  "grid_shape_z_r": [
+    1,
+    1729
+  ],
+  "graded_startup": true,
+  "first_dt_s": 5e-05,
+  "axial_refinement": 2,
+  "radial_min_spacing_m": 1.9531249999989175e-06,
+  "axial_min_spacing_m": null,
+  "steps": 8267,
+  "max_picard_iterations": 4,
+  "mean_picard_iterations": 3.423853876859804,
+  "cg_iterations": 84155,
+  "max_nonlinear_residual_C": 4.384790684178127e-11,
+  "max_heat_balance_residual_mean_Celsius": 2.932511004860583e-09,
+  "max_water_balance_residual_mean_kg_kg": 2.3101298977055984e-12,
+  "temperature_bounds": [
+    27.999999999998916,
+    36.78556027297983
+  ],
+  "moisture_bounds": [
+    1.510235316312416,
+    2.5500000000000744
+  ],
+  "final_center_T_C": [
+    33.57534477131755,
+    2.5499924021148535
+  ],
+  "final_midplane_surface_T_C": [
+    36.78556027297983,
+    1.510235316312416
+  ],
+  "elapsed_seconds": 14.412451199998031,
+  "input_sha256": "7ef32870abeef420b89560b2530ff60dfe4255917805151d89988d0311af9dd7",
+  "environment": {
+    "python": "3.10.9",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "status": "success"
+}

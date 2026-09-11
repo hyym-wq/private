@@ -1,0 +1,89 @@
+{
+  "comparison_scope": "1800 output times x 21 radii, axial midplane",
+  "main_vs_1d_identical_radial_time": {
+    "temperature": {
+      "all_outputs_max_abs": 3.7395371066395455e-07,
+      "table_max_abs": 3.7395371066395455e-07,
+      "maximum_at_time_s_radius_cm": [
+        1800,
+        0.0
+      ]
+    },
+    "moisture": {
+      "all_outputs_max_abs": 2.214006755707487e-12,
+      "table_max_abs": 1.66688884917221e-12,
+      "maximum_at_time_s_radius_cm": [
+        1774,
+        1.9
+      ]
+    }
+  },
+  "time_refinement_1d_dt_half": {
+    "temperature": {
+      "all_outputs_max_abs": 5.352028296101707e-07,
+      "table_max_abs": 1.2415034689183813e-07,
+      "maximum_at_time_s_radius_cm": [
+        1021,
+        1.9
+      ]
+    },
+    "moisture": {
+      "all_outputs_max_abs": 3.8791405598814777e-07,
+      "table_max_abs": 8.337697421367807e-08,
+      "maximum_at_time_s_radius_cm": [
+        2,
+        2.0
+      ]
+    }
+  },
+  "space_refinement_1d_radial_double": {
+    "temperature": {
+      "all_outputs_max_abs": 1.1324445168270358e-06,
+      "table_max_abs": 1.0511868069329466e-06,
+      "maximum_at_time_s_radius_cm": [
+        301,
+        1.9
+      ]
+    },
+    "moisture": {
+      "all_outputs_max_abs": 8.383479272566774e-06,
+      "table_max_abs": 6.668193496928154e-06,
+      "maximum_at_time_s_radius_cm": [
+        100,
+        1.9
+      ]
+    }
+  },
+  "main_vs_finer_1d_combined": {
+    "temperature": {
+      "all_outputs_max_abs": 1.6377223701624644e-06,
+      "table_max_abs": 1.175380354823119e-06,
+      "maximum_at_time_s_radius_cm": [
+        301,
+        1.9
+      ]
+    },
+    "moisture": {
+      "all_outputs_max_abs": 8.414216552399267e-06,
+      "table_max_abs": 6.637563868316931e-06,
+      "maximum_at_time_s_radius_cm": [
+        98,
+        1.9
+      ]
+    }
+  },
+  "final_volume_means_2d": [
+    35.427858968646056,
+    2.274828149968093
+  ],
+  "final_radial_means_1d": [
+    35.16791511407301,
+    2.2935564121945617
+  ],
+  "final_volume_mean_2d_minus_1d": [
+    0.25994385457304503,
+    -0.01872826222646884
+  ],
+  "scope_limit": "Output convergence is verified at z=0; end-corner field accuracy is not certified to four decimals.",
+  "raw_result_sha256": "6f297f8ad2f44bc38db1704fec20e0150b3c912400bcfd46a40e79fdbc034778"
+}
